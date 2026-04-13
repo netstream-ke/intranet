@@ -1,0 +1,58 @@
+<div class="form-page">
+
+<h1>Users</h1>
+
+<% if current_user&.admin? %>
+  <%= link_to "New User", new_user_path %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Actions</th>
+    <th>Change Role</th>
+    <th>Suspend/Unsuspend</th>
+    <th>Change Password</th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.role %></td>
+
+      <td>
+        <% if current_user&.admin? %>
+          <%= button_to "Delete", user_path(user),
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if current_user&.admin? %>
+          <%= button_to (user.admin? ? "Demote" : "Promote"),
+              update_role_path(user),
+              method: :patch %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if current_user&.admin? %>
+          <%= button_to (user.suspended? ? "Unsuspend" : "Suspend"),
+              toggle_suspend_path(user),
+              method: :patch %>
+        <% end %>
+      </td>
+      <td>
+        <% if current_user&.admin? || current_user == user %>
+          <%= link_to "Change Password", edit_password_path(user) %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+
+</table>
+</div>

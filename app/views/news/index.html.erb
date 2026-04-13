@@ -1,0 +1,39 @@
+<% if @main %>
+  <div class="main-story">
+    <% if @main.images.attached? %>
+      <%= image_tag @main.images.first, class: "main-image" %>
+    <% end %>
+
+    <div class="overlay">
+      <h1><%= link_to @main.title, news_path(@main) %></h1>
+      <p>By <%= @main.writer %></p>
+
+      <% if current_user&.admin? %>
+        <%= link_to "Edit", edit_news_path(@main), class: "edit-btn" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!-- OTHER STORIES -->
+<div class="news-grid">
+  <% @articles.each do |article| %>
+
+    <div class="news-card">
+
+      <% if article.images.attached? %>
+        <%= image_tag article.images.first, class: "card-image" %>
+      <% end %>
+
+      <h3><%= link_to article.title, news_path(article) %></h3>
+      <p><%= article.writer %></p>
+      <p><%= truncate(article.content, length: 120) %></p>
+
+      <% if current_user&.admin? %>
+        <%= link_to "Edit", edit_news_path(article), class: "edit-btn" %>
+      <% end %>
+
+    </div>
+
+  <% end %>
+</div>

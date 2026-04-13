@@ -26,10 +26,23 @@
 </div>
 
 <div>
-<%= f.label :user %>
+<%= f.label :user_id, "Assign To" %>
 <%= f.collection_select :user_id, User.all, :id, :name %>
 </div>
+<div>
+<%= f.file_field :files, multiple: true %>
+</div>
 
-<%= f.submit %>
+<div>
+<%= f.submit "Create Task" %>
+</div>
+<div>
+
+<%#= f.label :user_id, "Assign To" %>
+
+<%#=f.collection_select :user_id, User.all, :id, :name %>
+
+</div>
+
 
 <% end %>

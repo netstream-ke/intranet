@@ -1,0 +1,18 @@
+<div class="article-page">
+
+  <h1><%= @news.title %></h1>
+  <p class="byline">By <%= @news.writer %></p>
+
+  <!-- IMAGE GALLERY -->
+  <div class="article-images">
+    <% @news.images.each do |img| %>
+      <%= image_tag img, class: "article-image" %>
+    <% end %>
+  </div>
+
+  <!-- FULL CONTENT -->
+  <div class="article-content">
+    <%= simple_format(@news.content) %>
+  </div>
+
+</div>

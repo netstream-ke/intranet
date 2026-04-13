@@ -1,7 +1,7 @@
-<h1 class="text-3xl font-bold mb-6">Task Board</h1>
 
+<div class="form-page">
+<h1 class="text-3xl font-bold mb-6">My Task Board</h1>
 <div class="grid grid-cols-3 gap-6">
-
 <div class="bg-gray-100 p-4 rounded">
 <h2 class="font-bold mb-2">Not Done</h2>
 <% @not_done.each do |task| %>
@@ -12,7 +12,8 @@
 </div>
 
 <div class="bg-yellow-100 p-4 rounded">
-<h2 class="font-bold mb-2">Ongoing</h2>
+<h2 class="font-bold mb-2">Ongoing Tasks</h2>
+
 <% @ongoing.each do |task| %>
 <div class="bg-white p-2 mb-2 shadow">
 <%= task.title %>
@@ -21,12 +22,13 @@
 </div>
 
 <div class="bg-green-100 p-4 rounded">
-<h2 class="font-bold mb-2">Completed</h2>
+<h2 class="font-bold mb-2">Completed Tasks</h2>
 <% @completed.each do |task| %>
 <div class="bg-white p-2 mb-2 shadow">
 <%= task.title %>
 </div>
 <% end %>
-</div>
 
+</div>
+</div>
 </div>

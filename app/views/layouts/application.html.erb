@@ -3,10 +3,15 @@
   <head>
     <title><%= content_for(:title) || "Advanced Task Manager" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    
 
     <%= yield :head %>
 
@@ -22,9 +27,114 @@
     <%= javascript_importmap_tags %>
   </head>
 
+
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+
+<% if current_user %>
+
+  <div class="navbar">
+  <div class="nav-links">
+
+   <div class="logo">
+    <%= link_to tasks_path do %>
+      <%= image_tag "teem-logo.png", alt: "teem", class: "navbar-logo" %>
+    <% end %>
+  </div>
+
+    <%= link_to "Tasks", tasks_path %>
+    <%= link_to "Board", "/board" %>
+    <%= link_to "Reports", reports_path %>
+    <%= link_to "News", news_index_path %>
+
+    <% if current_user.admin? %>
+      <%= link_to "Users", users_path %>
+      <%= link_to "Admin Dashboard", admin_dashboard_path %>
+      <%= link_to "Audit Logs", admin_logs_path %>
+    <% end %>
+
+    <% unread = current_user.notifications.where(read: false).count %>
+
+    <%= link_to notifications_path do %>
+      🔔 <% if unread > 0 %>(<%= unread %>)<% end %>
+    <% end %>
+
+    <%= button_to "Logout", logout_path, method: :delete %>
+
+<% end %>
+    <%#= current_user&.name %>
+
+    <% if current_user %>
+      <div class="user-menu">
+
+        <!-- Avatar 
+        <div class="avatar" onclick="toggledropDown()">
+          <%= current_user.email[0].upcase %>
+        </div>-->
+
+        <!-- Dropdown -->
+       <!-- <div class="dropdown" id="dropdown">
+
+          <p class="user-email"><%= current_user.name %></p>
+
+    
+
+          <%= link_to "Dashboard", tasks_path %>
+
+          <% if current_user.admin? %>
+            <%#= link_to "Manage Users", users_path %>
+          <% end %>
+
+          <%#= button_to "Logout", logout_path, method: :delete %>
+        </div>-->
+
+      </div>
+    <% end %>
+  </div>
+  </div>
+  </div>
+  <div class="content">
+    <% flash.each do |key, message| %>
+      <div class="flash <%= key %>"><%= message %>
+    <% end %>
+    </div>
+
+
+<div class="page-container">
+  <%= yield %>
+  </div>
+  </div>
+</div>
+<footer class="footer">
+
+  <div class="footer-left">
+    © <%= Time.current.year %> teem
+  </div>
+
+  <div class="footer-center">
+    <%= link_to "Dashboard", tasks_path %>
+    <%= link_to "My Tasks", tasks_path %>
+    <% if current_user&.admin? %>
+      <%= link_to "Users", users_path %>
+    <% end %>
+  </div>
+
+  <div class="footer-right">
+    <% if current_user %>
+      Logged in as <%= current_user.name %>
+    <% end %>
+  </div>
+
+</footer>
+
+<script>
+let dropDown = document.getElementByID("dropdown");
+
+function = toggledropDown(){
+
+      dropDown.classList.toggle("open-menu");
+}
+
+</script>
+
   </body>
 </html>

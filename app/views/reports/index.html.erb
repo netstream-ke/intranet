@@ -1,0 +1,61 @@
+<div class="form-page">
+<table>
+
+<h1>Summary Reports</h1>
+
+<td><p>Total Completed Tasks:<strong> <%= @total_tasks %></strong></p></td>
+
+<td><p>Total Time Worked: <strong><%= @total_hours %> hours</strong></p></td>
+
+<td><p>Average Task Duration: <strong><%= @average_time %> minutes</strong></p></td>
+</table>
+</br>
+<h2>Completed Assignments</h2>
+
+<table>
+
+<tr>
+<th>Assignment</th>
+<th>Assigned to</th>
+<th>Duration (minutes)</th>
+</tr>
+
+<% @tasks.each do |task| %>
+
+<tr>
+
+<td><%= task.title %></td>
+
+<td><%= task.user.name %></td>
+
+<td><%= task.duration_in_minutes %></td>
+
+</tr>
+
+
+<% end %>
+</table><br><br><br><br>
+<div class="chart-container">
+<canvas id="tasksChart"></canvas>
+</div>
+
+
+<script>
+const ctx = document.getElementById('tasksChart');
+
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Not Done', 'Ongoing', 'Completed'],
+    datasets: [{
+      data: [
+        <%= @tasks_by_status[:not_done] %>,
+        <%= @tasks_by_status[:ongoing] %>,
+        <%= @tasks_by_status[:completed] %>
+      ]
+    }]
+  }
+});
+</script>
+
+</div>

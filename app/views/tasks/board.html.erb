@@ -1,0 +1,78 @@
+<h1>Task Board</h1>
+
+<div class="kanban-board">
+
+<div class="kanban-column">
+<h2>Not Done</h2>
+<div id="not_done" class="task-list">
+
+<% @not_done.each do |task| %>
+<div class="task-card" data-id="<%= task.id %>">
+<%= task.title %>
+</div>
+<% end %>
+
+</div>
+</div>
+
+<div class="kanban-column">
+<h2>Ongoing</h2>
+<div id="ongoing" class="task-list">
+
+<% @ongoing.each do |task| %>
+<div class="task-card" data-id="<%= task.id %>">
+<%= task.title %>
+</div>
+<% end %>
+
+</div>
+</div>
+
+<div class="kanban-column">
+<h2>Completed</h2>
+<div id="completed" class="task-list">
+
+<% @completed.each do |task| %>
+<div class="task-card" data-id="<%= task.id %>">
+<%= task.title %>
+</div>
+<% end %>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+function updateTaskStatus(taskId, status) {
+
+fetch(`/tasks/${taskId}/update_status`, {
+method: "PATCH",
+headers: {
+"Content-Type": "application/json",
+"X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+},
+body: JSON.stringify({ status: status })
+})
+
+}
+
+["not_done","ongoing","completed"].forEach(status => {
+
+new Sortable(document.getElementById(status), {
+group: "tasks",
+animation: 150,
+
+onAdd: function (evt) {
+
+const taskId = evt.item.dataset.id
+updateTaskStatus(taskId, status)
+
+}
+
+})
+
+})
+
+</script>

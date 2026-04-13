@@ -1,13 +1,13 @@
-<h2>Login</h2>
-
-<%= form_with url: login_path do %>
-
-<label>Email</label>
-<%= text_field_tag :email %>
-
-<label>Password</label>
-<%= password_field_tag :password %>
-
-<%= submit_tag "Login" %>
-
+<div class="login-container">
+<kanban-board>
+  <h2>Login to Your Account</h2>
+  <div class="input-group">
+<%= form_with url: login_path, method: :post, local: true do |f| %>
+<%= f.label :email %>
+  <%= f.email_field :email, placeholder: "Email"%><br><br>
+  <%= f.label :password %>
+  <%= f.password_field :password, placeholder: "Password" %>
+</div>
+  <%= f.submit "Login" %>
 <% end %>
+</div>

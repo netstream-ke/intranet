@@ -1,10 +1,1123 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* =========================
+   ROOT (COLORS)
+========================= */
+:root {
+  --primary: #4cd964;
+  --secondary: #a3e635;
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: 60px;
+  margin:auto;
+
+}
+p{
+  color:#6b7280;
+  font-size:14px;
+}
+
+/* Main wrapper pushes content below navbar */
+.main-wrapper {
+  padding-top: 40px;   /* space for navbar */
+  padding-bottom: 40px; /* space for footer */
+  display: flex;
+  justify-content: center;
+}
+
+/* Center page content */
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =========================
+   NAVBAR (SLACK STYLE)
+========================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+.navbar a {
+  color: var(--muted);
+  text-decoration: none;
+
+  display: flex;
+}
+
+.navbar a:hover {
+color: var(--primary);
+}
+
+/* Center title */
+.nav-left {
+  font-size: 18px;
+  font-weight: 600;
+  align-items: center;
+}
+
+/* Avatar right */
+.nav-right {
+  position: absolute;
+  right: 20px;
+  display: flex;
+}
+
+/* Avatar */
+.avatar {
+  width: 38px;
+  height: 38px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+
+/* =========================
+   TABLE (CARD STYLE)
+========================= */
+table {
+  width: 100%;
+  background: white;
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  transform: translateY(10px);
+
+}
+
+th {
+  color: var(--primary);
+  padding: 12px;
+  text-align: left;
+}
+
+th:hover {
+  color: var(--primary);
+  padding: 12px;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+td {
+  padding: 12px;
+}
+td:hover {
+  padding: 12px;
+}
+tr{
+border-top:solid 1px #0056b3;
+}
+
+tr:nth-child(even) {
+  background: #f9fafb;
+  
+}
+tr:nth-child(even):hover {
+  background: #f9fafb;
+  transition: 0.2s ease;
+}
+/* =========================
+   TASK CARD STYLE
+========================= */
+.task-card {
+  background: var(--card);
+  padding: 16px;
+  min-width:300px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   TASK META
+========================= */
+.task-header {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.task-meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button,
+input[type="submit"] {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: var(--secondary);
+}
+
+/* =========================
+   ICON BUTTONS
+========================= */
+.icon-btn {
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: #f3f4f6;
+}
+
+.icon-btn.edit { color: #2196f3; }
+.icon-btn.delete { color: #f44336; }
+
+/* =========================
+   BADGES
+========================= */
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge.overdue {
+  background: #fdecea;
+  color: #d32f2f;
+}
+
+.badge.today {
+  background: #fff4e5;
+  color: #f57c00;
+}
+
+.badge.upcoming {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+/* =========================
+   FLOATING BUTTON
+========================= */
+.floating-add-button {
+  position: fixed;
+  bottom: 60px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+.login-container {
+  width: 400px;
+  margin: 60px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 600px) {
+  .main-content {
+    padding: 10px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+}
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Sections */
+
+.footer-left {
+  font-weight: 500;
+}
+
+.footer-center {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-center a {
+  text-decoration: none;
+  color: #6b7280;
+}
+
+.footer-center a:hover {
+  color: #4cd964;
+}
+
+.footer-right {
+  font-size: 13px;
+}
+
+
+.board {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.column {
+  flex: 1;
+  background: #2d6aa8;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.task-card {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.kanban-column {
+  flex: 1;
+  background-color: #f4f6f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.task-list {
+  min-height: 200px;
+}
+
+.task-card {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  cursor: grab;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.task-card:hover {
+  background: #f9fafb;
+}
+.task-card {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+}
+.page-container {
+  max-width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+/* Login card container */
+.login-container {
+  margin-top: 40px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 40%;
+    align-items: center;
+   align-content: center;
+}
+.input-group label {
+  margin-top:4px;
+    display: block;
+    margin-bottom: 8px;
+    color:#a3e635;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    font-size: 16px;
+}
+
+.input-group input:focus {
+    border-color:#a3e635;;
+    outline: none;
+}
+
+/* Action button */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+.input-group {
+    margin-bottom: 20px;
+}
+.comments_section text_field {
+  min-height: 80px;
+  field-sizing: content;
+  padding: 10px;
+  border-radius: 4px;
+  width:50%;
+  border: 1px solid #ccc;
+  
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+input,
+select,
+textarea {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  field-sizing: content;
+  min-width: 100px;
+  
+}
+/* =========================
+   COMMENT THREAD LINE
+========================= */
+
+.comment-thread {
+  position: relative;
+  margin-top: 20px;
+  padding-left: 20px;
+}
+
+/* Vertical line */
+.comment-thread::before {
+  content: "";
+  position: relative;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+/* Each comment row */
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+/* Dot on the line */
+.comment-item::before {
+  content: "";
+  position: relative;
+  left: -6px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  background: #4cd964;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Avatar */
+.comment-avatar {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #4cd964, #a3e635);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* Body */
+.comment-body {
+  flex: 1;
+}
+
+/* Header */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+/* Name */
+.comment-user {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Time */
+.comment-time {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Bubble */
+.comment-bubble {
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+/* Hover effect */
+.comment-bubble:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.comment-item {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.comment-item.reply {
+  margin-left: 10px;
+}
+h3 {
+  color: var(--primary);
+  font-size: 18px;
+}
+h4 {
+  color: var(--muted);
+  font-size: 14px;
+}
+/* FORM CONTAINER */
+.comment-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+/* INPUT FIELD */
+.comment-input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  min-width: 60px;
+  field-sizing: content;
+
+}
+
+/* INPUT FOCUS (nice glow) */
+.comment-input:focus {
+  border-color: #4cd964 !important; /* apple green */
+  box-shadow: 0 0 0 2px rgba(76, 217, 100, 0.2);
+}
+
+/* SEND BUTTON */
+.comment-submit {
+  background: linear-gradient(135deg, #4cd964, #a3e635);
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.comment-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+a.button{
+  background: var(--primary);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+}
+a.button:hover {
+  background: linear-gradient(135deg, #4cd964, #a3e635);
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+input.button_to {
+  background:none;
+}
+a{
+  text-decoration: none;
+}
+.comment-input {
+  resize: none;
+  overflow: hidden;
+  min-height: 40px;
+  max-height: 150px;
+}
+.replies {
+  margin-left: 30px;
+  border-left: 2px solid #e5e7eb;
+  padding-left: 10px;
+}
+
+.reply {
+  margin-top: 8px;
+  background: #f9fafb;
+  padding: 8px;
+  border-radius: 8px;
+}
+.navbar-logo {
+  height: 40px;
+  width:auto;
+  align-items: left;
+}
+.chart-container {
+  
+  width: 400px;     /* change width */
+  height: 400px;    /* change height */
+  margin: auto;     /* center it */
+}
+
+
+
+/* =========================
+   COMMENT THREAD LINE
+========================= */
+
+.comment-thread {
+  position: relative;
+  margin-top: 20px;
+  padding-left: 20px;
+}
+
+/* Vertical line */
+.comment-thread::before {
+  content: "";
+  position: relative;
+  top: 0;
+  bottom: 0;
+  background: #e5e7eb;
+}
+
+/* Each comment row */
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+/* Dot on the line */
+.comment-item::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  background: #4cd964;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Avatar */
+.comment-avatar {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #4cd964, #a3e635);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* Body */
+.comment-body {
+  flex: 1;
+}
+
+/* Header */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+/* Name */
+.comment-user {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Time */
+.comment-time {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Bubble */
+.comment-bubble {
+  background: #ffffff;
+  padding: 10px 14px;
+  width:fit-content;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+/* Hover effect */
+.comment-bubble:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+/* Replies container */
+.replies {
+
+  border-left: 2px solid #e5e7eb;
+  padding-left: 15px;
+  margin-top: 10px;
+}
+
+/* Reply comment */
+.comment-item.reply {
+  margin-top: 10px;
+}
+
+/* Reply button */
+.reply-btn {
+  font-size: 12px;
+  color: #4cd964;
+  cursor: pointer;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.reply-btn:hover {
+  text-decoration: underline;
+}
+
+/* Reply form */
+.reply-form {
+  margin-top: 10px;
+}
+
+/* Hidden toggle */
+
+
+
+.toggle-replies {
+  font-size: 12px;
+  color: #4cd964;
+  cursor: pointer;
+}
+
+.toggle-replies:hover {
+  text-decoration: underline;
+}
+/* Hide system */
+
+/* Comment actions */
+.comment-actions {
+  margin-top: 6px;
+  font-size: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.reply-btn,
+.toggle-thread {
+  color: #4cd964;
+  cursor: pointer;
+}
+
+/* Replies (indented thread) */
+.replies {
+  margin-top: 10px;
+  margin-left: 40px;
+  border-left: 2px solid #e5e7eb;
+  padding-left: 10px;
+  field-sizing: content;
+}
+
+/* Toggle comments button */
+.toggle-comments-btn {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #4cd964;
+  cursor: pointer;
+}
+
+/* =========================
+   NAVBAR CONTAINER
+========================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+ 
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  padding: 20px 40px;
+  width: 100%;
+}
+
+/* =========================
+   LEFT (LOGO)
+========================= */
+.logo {
+  display: flex;
+  align-items: left;
+}
+
+.navbar-logo {
+  height: 35px;
+  width: auto;
+}
+
+/* =========================
+   CENTER (NAV LINKS)
+========================= */
+.navbar a {
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 700;
+  align-content: center;
+  transition: 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #4cd964;
+}
+
+/* Group center links */
+.navbar > a {
+  flex-shrink: 0;
+}
+
+/* =========================
+   RIGHT (USER + AVATAR)
+========================= */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-menu {
+  position: relative;
+}
+
+/* Avatar */
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: #4cd964;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  width: 200px;
+  padding: 10px;
+  display: flex;
+  max-height:0px;
+  flex-direction: column;
+  gap: 8px;
+  transition:max-height 0.5s;
+}
+
+.dropdown.open-menu {
+  max-height:100px;
+
+}
+
+.dropdown a,
+.dropdown button {
+  padding: 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown a:hover,
+.dropdown button:hover {
+  background: #f3f4f6;
+}
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    margin: 20px 0;
+  }
+
+  .nav-right {
+    justify-content: center;
+    width: 100%;
+  }
+
+ 
+  .page-container {
+    padding: 10px;
+  }
+}
+.nav-links {
+  display: flex;
+  justify-content: center;   /* centers items */
+  align-items: center;
+  gap: 20px;                 /* 🔥 controls spacing between items */
+  flex: 1;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  background: white;
+  border-top: 1px solid var(--border);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;   
+  padding: 10px;
+  font-size: 14px;
+}
+.autocomplete-results {
+  position: absolute;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-top: 5px;
+  width: 300px;
+  z-index: 1000;
+}
+
+.autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover {
+  background: #f3f4f6;
+}
+.comment-section { margin-top: 15px; }
+.replies { margin-left: 30px; }
+.reply-form { margin-top: 10px; }
+.toggle-comments-btn { background: none; border: none; color: #4cd964; cursor: pointer; margin-top: 10px; }
+.reply-btn, .toggle-replies { color: #4cd964; cursor: pointer; font-size: 12px; }
+
+
+
+/* ================= NEWS PORTAL ================= */
+
+.news-body {
+  background: #f9fafb;
+  font-family: "Poppins", sans-serif;
+}
+
+/* NAVBAR */
+.news-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: black;
+  color: white;
+}
+
+.news-tabs a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.news-tabs a:hover {
+  color: #4cd964;
+}
+
+/* GRID */
+.news-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin:auto;
+  
+}
+
+/* MAIN STORY */
+.main-story {
+  grid-column: span 3;
+  position: relative;
+}
+
+.main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+}
+
+/* CARDS */
+.news-card {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* ARTICLE PAGE */
+.article-page {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.article-image {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.form-page{
+  max-width: 800px;
+  align-items: center;
+  justify-content: center;
+  margin:auto;
+  padding-top:60px;
+  padding-bottom:60px;
+}

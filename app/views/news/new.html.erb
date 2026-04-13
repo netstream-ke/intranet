@@ -1,0 +1,41 @@
+
+<div class="form-page">
+<h2><%= action_name.capitalize %> News</h2>
+
+<%= form_with model: @news do |f| %>
+
+  <div class="input-group">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="input-group">
+    <%= f.label :category %>
+    <%= f.select :category,
+        News.categories.keys.map { |c| [c.titleize, c] } %>
+  </div>
+
+  <div class="input-group">
+    <%= f.label :writer %>
+    <%= f.text_field :writer %>
+  </div>
+
+  <div class="input-group">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="input-group">
+    <%= f.label :images, "Upload Images" %>
+    <%= f.file_field :images, multiple: true %>
+  </div>
+
+  <div class="input-group">
+  <%= f.label :is_main, "Set as Main Story" %>
+  <%= f.check_box :is_main %>
+</div>
+
+  <%= f.submit "Publish" %>
+
+<% end %>
+</div>

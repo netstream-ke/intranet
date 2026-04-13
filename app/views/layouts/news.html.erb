@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>News Portal</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag :app %>
+</head>
+
+<body class="news-body">
+
+  <!-- NEWS NAVBAR ONLY -->
+  <div class="news-navbar">
+    <div class="news-logo">the brief</div>
+
+    <div class="news-tabs">
+      <%= link_to "Top News", news_index_path(category: "top_news") %>
+      <%= link_to "Entertainment", news_index_path(category: "entertainment") %>
+      <%= link_to "Sports", news_index_path(category: "sports") %>
+      <%= link_to "CSR", news_index_path(category: "csr") %>
+      <%= link_to "Games", news_index_path(category: "games") %>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="news-container">
+    <%= yield %>
+  </div>
+
+<footer class="footer">
+
+  <div class="footer-left">
+    © <%= Time.current.year %> teem
+  </div>
+
+  <div class="footer-center">
+    <%= link_to "Tasks", tasks_path %>
+  </div>
+
+  <div class="footer-right">
+    <% if current_user %>
+      Logged in as <%= current_user.name %>
+    <% end %>
+  </div>
+
+</footer>
+
+
+</body>
+</html>
