@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Advanced Task Manager" %></title>
+    <title><%= content_for(:title) || "Jedison Intranet" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -9,8 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<%= csp_meta_tag %>
+<link rel="stylesheet" href="https://cloudflare.com">
+
+<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+<%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
+
+<%= javascript_importmap_tags %>
+<%= tinymce_assets %>
     
 
     <%= yield :head %>
@@ -22,9 +30,6 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
   </head>
 
 
@@ -41,22 +46,28 @@
     <% end %>
   </div>
 
-    <%= link_to "Tasks", tasks_path %>
-    <%= link_to "Board", "/board" %>
-    <%= link_to "Reports", reports_path %>
-    <%= link_to "News", news_index_path %>
+    <%= link_to "Planner", tasks_path %>
+    <%#= link_to "Board", "/board" %>
+    <%#= link_to "Reports", reports_path %>
+    <%= link_to "Intranet", news_index_path %>
 
     <% if current_user.admin? %>
       <%= link_to "Users", users_path %>
       <%= link_to "Admin Dashboard", admin_dashboard_path %>
+      <%= link_to "Board", "/board" %>
+      <%= link_to "Reports", reports_path %>
       <%= link_to "Audit Logs", admin_logs_path %>
     <% end %>
 
-    <% unread = current_user.notifications.where(read: false).count %>
 
-    <%= link_to notifications_path do %>
-      🔔 <% if unread > 0 %>(<%= unread %>)<% end %>
-    <% end %>
+
+<% unread_count = current_user.chat_messages.where(read: false).count rescue 0 %>
+
+<% if current_user.unread_messages_count > 0 %>
+  <%= link_to chat_rooms_path, class: "chat-notification" do %>
+    <%= current_user.unread_messages_count %> new messages
+  <% end %>
+<% end %>
 
     <%= button_to "Logout", logout_path, method: :delete %>
 
@@ -66,7 +77,7 @@
     <% if current_user %>
       <div class="user-menu">
 
-        <!-- Avatar 
+        <!-- Avatar
         <div class="avatar" onclick="toggledropDown()">
           <%= current_user.email[0].upcase %>
         </div>-->
@@ -86,7 +97,7 @@
 
           <%#= button_to "Logout", logout_path, method: :delete %>
         </div>-->
-
+<%= link_to "New Chat", new_chat_chat_rooms_path %>
       </div>
     <% end %>
   </div>
@@ -106,13 +117,19 @@
 </div>
 <footer class="footer">
 
+
   <div class="footer-left">
-    © <%= Time.current.year %> teem
+    © <%= Time.current.year %> Jedison
   </div>
 
   <div class="footer-center">
-    <%= link_to "Dashboard", tasks_path %>
-    <%= link_to "My Tasks", tasks_path %>
+  <%= link_to "Planner", tasks_path %>
+    <%= link_to "Mission", mission_path, class: "tab" %>
+
+<%= link_to "Vision", vision_path, class: "tab" %>
+
+<%= link_to "Values", values_path, class: "tab" %>
+  
     <% if current_user&.admin? %>
       <%= link_to "Users", users_path %>
     <% end %>

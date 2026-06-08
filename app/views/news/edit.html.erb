@@ -1,35 +1,7 @@
-<div class="form-page">
-<h2><%= action_name.capitalize %> News</h2>
 
-<%= form_with model: @news, local: true do |f| %>
-  <div class="input-group">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
+<div class="nyt-container">
 
-  <div class="input-group">
-    <%= f.label :category %>
-   <%= f.select :category,
-    News.categories.keys.map { |c| [c.titleize, c] },
-    {},
-    class: "select-field" %>
-  </div>
+<h1>Edit News Story</h1><br>
+<%= render "form" %>
 
-  <div class="input-group">
-    <%= f.label :writer %>
-    <%= f.text_field :writer %>
-  </div>
-
-  <div class="input-group">
-    <%= f.label :content %>
-    <%= f.text_area :content, rows: 6 %>
-  </div>
-
-  <div class="input-group">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
-  </div>
-
-  <%= f.submit action_name.capitalize, class: "button" %>
-<% end %>
 </div>

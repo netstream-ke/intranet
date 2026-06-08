@@ -1,39 +1,231 @@
-<% if @main %>
-  <div class="main-story">
-    <% if @main.images.attached? %>
-      <%= image_tag @main.images.first, class: "main-image" %>
+<div class="nyt-container">
+
+  <!-- CATEGORY TABS -->
+  <div class="news-tabs">
+     <%= link_to "Company Updates", news_index_path %> |
+    <%= link_to "Notice board", notices_path%>
+     
+  </div>
+
+  <!-- HERO (MAIN STORY) -->
+  <div class="nyt-hero">
+
+  <% hero_media = @main.media.first %>
+
+  <% if hero_media.content_type.start_with?("video") %>
+    <video controls autoplay muted class="hero-video">
+      <source src="<%= url_for(hero_media) %>">
+    </video>
+  <% else %>
+    <%= image_tag hero_media, class: "hero-image" %>
+  <% end %>
+
+
+
+      <!-- ADMIN ACTIONS -->
+      <% if current_user&.admin? %>
+        <div class="admin-actions">
+          <%= link_to "Edit", edit_news_path(@main), class: "button" %>
+
+          <%= button_to "Delete",
+              news_path(@main),
+              method: :delete,
+              data: { turbo_confirm: "Delete this story?" },
+              class: "delete-btn" %>
+        </div>
+      <% end %>
+
+      <div class="hero-text">
+        <h1><%= link_to @main.title, news_path(@main) %></h1>
+        <p><%= truncate(@main.content.to_plain_text, length: 180) %></p>
+      </div>
+
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="nyt-grid">
+
+    <!-- LEFT COLUMN -->
+    <div class="lead-left">
+      <% if @left.any? %>
+        <% @left.each do |story| %>
+
+          <h2><%= link_to story.title, news_path(story) %></h2>
+          <p><%= truncate(story.content.to_plain_text, length: 120) %></p>
+
+          <% if current_user&.admin? %>
+            <div class="admin-actions">
+              <%= link_to "✏️", edit_news_path(story) %>
+              <%= button_to "🗑",
+                  news_path(story),
+                  method: :delete,
+                  form: { data: { turbo_confirm: "Delete?" } } %>
+            </div>
+          <% end %>
+
+        <% end %>
+      <% else %>
+        <h2>Left Column Headline</h2>
+        <p>Stories placed in the left column will appear here.</p>
+      <% end %>
+    </div>
+
+    <!-- CENTER COLUMN -->
+    <div class="center-stack">
+<% @center.each do |story| %>
+
+  <div class="stack-item">
+
+    <% if story.media.attached? %>
+
+      <% first_media = story.media.first %>
+
+      <% if first_media.content_type.start_with?("image") %>
+
+        <%= image_tag first_media, class: "story-thumbnail" %>
+
+      <% elsif first_media.content_type.start_with?("video") %>
+
+        <video class="story-thumbnail" muted controls>
+          <source src="<%= url_for(first_media) %>">
+        </video>
+
+      <% end %>
+
     <% end %>
 
-    <div class="overlay">
-      <h1><%= link_to @main.title, news_path(@main) %></h1>
-      <p>By <%= @main.writer %></p>
+    <h3><%= link_to story.title, news_path(story) %></h3>
 
-      <% if current_user&.admin? %>
-        <%= link_to "Edit", edit_news_path(@main), class: "edit-btn" %>
-      <% end %>
-    </div>
+    <% if current_user&.admin? %>
+      <div class="admin-actions">
+        <%= link_to "✏️", edit_news_path(story) %>
+        <%= button_to "🗑",
+            news_path(story),
+            method: :delete %>
+      </div>
+    <% end %>
+
   </div>
+
 <% end %>
-
-<!-- OTHER STORIES -->
-<div class="news-grid">
-  <% @articles.each do |article| %>
-
-    <div class="news-card">
-
-      <% if article.images.attached? %>
-        <%= image_tag article.images.first, class: "card-image" %>
-      <% end %>
-
-      <h3><%= link_to article.title, news_path(article) %></h3>
-      <p><%= article.writer %></p>
-      <p><%= truncate(article.content, length: 120) %></p>
-
-      <% if current_user&.admin? %>
-        <%= link_to "Edit", edit_news_path(article), class: "edit-btn" %>
-      <% end %>
-
     </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-rail">
+      <% if @right.any? %>
+        <% @right.each do |story| %>
+
+          <% if story.media.attached? %>
+
+  <% first_media = story.media.first %>
+
+  <% if first_media.content_type.start_with?("image") %>
+
+    <%= image_tag first_media,
+        class: "story-thumbnail" %>
+
+  <% elsif first_media.content_type.start_with?("video") %>
+
+    <video class="story-thumbnail" muted>
+      <source src="<%= url_for(first_media) %>">
+    </video>
 
   <% end %>
+
+<% end %>
+
+          <div class="rail-item">
+            <h3><%= link_to story.title, news_path(story) %></h4>
+
+            <% if current_user&.admin? %>
+              <div class="admin-actions">
+                <%= link_to "✏️", edit_news_path(story) %>
+                <%= button_to "🗑",
+                    news_path(story),
+                    method: :delete %>
+              </div>
+            <% end %>
+          </div>
+
+        <% end %>
+      <% else %>
+        <div class="rail-item"><h4>Quick Read Story</div>
+        <div class="rail-item"><h4>Short Headline Example</div>
+        <div class="rail-item"><h4>Another Story Here</div>
+      <% end %>
+    </div>
+
+  </div>
+
+  <!-- MORE STORIES GRID -->
+  <div class="more-grid">
+    <% if @grid.any? %>
+      <% @grid.each do |story| %>
+
+        <div class="more-card">
+<% if story.media.attached? %>
+
+  <% first_media = story.media.first %>
+
+  <% if first_media.content_type.start_with?("image") %>
+
+    <%= image_tag first_media,
+        class: "story-thumbnail" %>
+
+  <% elsif first_media.content_type.start_with?("video") %>
+
+    <video class="story-thumbnail" muted>
+      <source src="<%= url_for(first_media) %>">
+    </video>
+
+  <% end %>
+
+<% end %>
+
+          <h3><%= link_to story.title, news_path(story) %></h3>
+
+          <% if current_user&.admin? %>
+            <div class="admin-actions">
+              <%= link_to "Edit", edit_news_path(story) %>
+              <%= button_to "Delete",
+                  news_path(story),
+                  method: :delete %>
+            </div>
+          <% end %>
+        </div>
+
+      <% end %>
+    <% else %>
+      <% 6.times do %>
+        <div class="more-card">
+          <img src="https://via.placeholder.com/300x140">
+          <h3>More Story Placeholder</h3>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-row">
+    <% if @gallery.present? && @gallery.media.attached? %>
+
+  <% @gallery.media.each do |file| %>
+
+    <% if file.content_type.start_with?("image") %>
+
+      <%= image_tag file, class: "gallery-img" %>
+
+    <% elsif file.content_type.start_with?("video") %>
+
+      <video controls class="gallery-video">
+        <source src="<%= url_for(file) %>">
+      </video>
+
+    <% end %>
+
+  <% end %>
+
+<% end %>
+  </div>
+
 </div>

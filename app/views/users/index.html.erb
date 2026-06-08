@@ -33,22 +33,24 @@
 
       <td>
         <% if current_user&.admin? %>
-          <%= button_to (user.admin? ? "Demote" : "Promote"),
-              update_role_path(user),
-              method: :patch %>
+<%= button_to (user.admin? ? "Demote" : "Promote"),
+    update_role_user_path(user),
+    method: :patch %>
         <% end %>
       </td>
 
+      
+
       <td>
         <% if current_user&.admin? %>
-          <%= button_to (user.suspended? ? "Unsuspend" : "Suspend"),
-              toggle_suspend_path(user),
-              method: :patch %>
+<%= button_to (user.suspended? ? "Unsuspend" : "Suspend"),
+    toggle_suspend_user_path(user),
+    method: :patch %>
         <% end %>
       </td>
       <td>
         <% if current_user&.admin? || current_user == user %>
-          <%= link_to "Change Password", edit_password_path(user) %>
+          <%= link_to "Change Password", edit_password_user_path(user) %>
         <% end %>
       </td>
     </tr>

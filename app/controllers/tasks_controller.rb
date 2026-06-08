@@ -1,39 +1,48 @@
 class TasksController < ApplicationController
 
-  before_action :authenticate_user
+   before_action :authenticate_user
+  before_action :set_task, only: [:edit, :update, :destroy]
 
-  def index
-  @not_done_tasks = Task.not_done.order(created_at: :desc)
-  @ongoing_tasks = Task.ongoing.order(created_at: :desc)
-  @completed_tasks = Task.completed.order(created_at: :desc)
-  end
+def index
+  visible_tasks = Task.where(
+    "user_id = :id OR assigned_to_id = :id",
+    id: current_user.id
+  )
+
+  @not_done_tasks = visible_tasks.where(status: "not_done")
+  @ongoing_tasks = visible_tasks.where(status: "ongoing")
+  @completed_tasks = visible_tasks.where(status: "completed")
+end
 
   def new
     @task = Task.new
   end
   
 
- def create
-  
+def create
   @task = Task.new(task_params)
+  @task.user = current_user
 
   if @task.save
-    respond_to do |format|
-      format.html { redirect_to tasks_path }
-      format.turbo_stream
-    end
+    redirect_to tasks_path
   else
     render :new
   end
 end
 
-  def edit
-    @task = Task.find(params[:id])
-  end
-  def board
-  @not_done = Task.not_done
-  @ongoing = Task.ongoing
-  @completed = Task.completed
+def edit
+end
+
+def board
+  visible_tasks = Task.where(
+    "user_id = ? OR assigned_to_id = ?",
+    current_user.id,
+    current_user.id
+  )
+
+  @not_done  = visible_tasks.not_done
+  @ongoing   = visible_tasks.ongoing
+  @completed = visible_tasks.completed
 end
 
 def update_status
@@ -54,7 +63,6 @@ def update_status
 end
 
   def update
-    @task = Task.find(params[:id])
 
     new_status = params[:task][:status]
 
@@ -73,10 +81,10 @@ end
     end
   end
 
-  def destroy
-    Task.find(params[:id]).destroy
-    redirect_to tasks_path
-  end
+def destroy
+  @task.destroy
+  redirect_to tasks_path
+end
 
 
   def autocomplete
@@ -86,7 +94,15 @@ end
 
   private
 
- def task_params
+  def set_task
+  @task = Task.where(
+    "user_id = ? OR assigned_to_id = ?",
+    current_user.id,
+    current_user.id
+  ).find(params[:id])
+end
+
+def task_params
   params.require(:task).permit(
     :title,
     :description,
@@ -94,6 +110,7 @@ end
     :priority,
     :due_date,
     :user_id,
+    :assigned_to_id,
     files: []
   )
 end

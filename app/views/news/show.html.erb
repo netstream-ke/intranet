@@ -1,18 +1,104 @@
-<div class="article-page">
+<!-- CATEGORY TABS -->
+<div class="news-tabs">
 
-  <h1><%= @news.title %></h1>
-  <p class="byline">By <%= @news.writer %></p>
 
-  <!-- IMAGE GALLERY -->
-  <div class="article-images">
-    <% @news.images.each do |img| %>
-      <%= image_tag img, class: "article-image" %>
+    <%= link_to "Company Updates", news_index_path %>
+    <%= link_to "Notice board", notices_path%>
+</div>
+
+<div class="form-page">
+  <div class="article-page">
+
+    <!-- IMAGE GALLERY -->
+    <div class="article-images">
+<% if @news.media.attached? %>
+
+  <div class="article-media">
+
+    <% @news.media.each do |file| %>
+
+      <% if file.content_type.start_with?("image") %>
+
+        <%= image_tag file,
+            class: "article-image" %>
+
+      <% elsif file.content_type.start_with?("video") %>
+
+        <video controls class="article-video">
+          <source src="<%= url_for(file) %>"
+                  type="<%= file.content_type %>">
+        </video>
+
+      <% end %>
+
     <% end %>
+
   </div>
 
-  <!-- FULL CONTENT -->
-  <div class="article-content">
-    <%= simple_format(@news.content) %>
-  </div>
+<% end %>
+    </div>
 
+    <h1><%= @news.title %></h1>
+
+    <!-- META -->
+    <div class="article-meta">
+      <p class="byline">
+        By <%= link_to @news.user&.name || "Unknown Author", user_path(@news.user) %>
+        <% if @news.user&.verified? %>
+          <span class="verified-badge">✔</span>
+        <% end %>
+      </p>
+
+      <p class="date">
+        Published: <%= @news.created_at.strftime("%b %d, %Y") %>
+        <% if @news.updated_at > @news.created_at %>
+          | Updated: <%= @news.updated_at.strftime("%b %d, %Y %H:%M") %>
+        <% end %>
+        | <%= @news.reading_time %> min read
+      </p>
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="article-content">
+  <%= @news.content %>
+</div>
+
+    <!-- AUTHOR BOX -->
+    <div class="author-box">
+      <div class="author-avatar">
+        <% if @news.user&.avatar&.attached? %>
+          <%= image_tag @news.user.avatar, class: "author-img" %>
+        <% else %>
+          <%= @news.user&.name&.first&.upcase || "A" %>
+        <% end %>
+      </div>
+
+      <div class="author-info">
+        <h4>
+          <%= link_to @news.user&.name || "Unknown Author", user_path(@news.user) %>
+          <% if @news.user&.verified? %>
+            <span class="verified-badge">✔ Verified</span>
+          <% end %>
+        </h4>
+
+        <p>Staff Writer</p>
+        <p>Writes about <%= @news.category&.titleize %></p>
+      </div>
+    </div><br>
+
+    <!-- MORE FROM THIS WRITER -->
+    <h3>More from <%= @news.user&.name %></h3>
+
+    <% @news.user&.news&.where.not(id: @news.id).limit(4).each do |story| %>
+      <div class="more-story">
+        <%= link_to story.title, news_path(story) %>
+      </div>
+    <% end %>
+
+    <br>
+
+    <%= link_to "Back to News", news_index_path %>
+
+  </div>
 </div>

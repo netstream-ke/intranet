@@ -1,81 +1,118 @@
 class NewsController < ApplicationController
+  require 'date'
   before_action :require_login
-  before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_news, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:new, :create, :edit, :update, :destroy, :sort]
 
+  layout "news"
 
+  # =========================
+  # INDEX (HOMEPAGE)
+  # =========================
+  def index
+    @main = News.find_by(story_type: :main)
 
-    layout "news"
+    @left   = News.left.order(:position)
+    @center = News.center.order(:position)
+    @right  = News.right.order(:position)
+    @grid   = News.grid.order(:position)
+  end
 
- def index
-  @main = News.find_by(is_main: true)
-  @articles = News.others
-end
+  # =========================
+  # DRAG & DROP SORT
+  # =========================
+  def sort
+    params[:order].each do |item|
+      News.find(item[:id]).update(
+        placement: item[:placement],
+        position: item[:position]
+      )
+    end
 
+    head :ok
+  end
+
+  # =========================
+  # CRUD
+  # =========================
   def show
-    @news = News.find(params[:id])
   end
 
-  # GET /news/new
   def new
-    @news = News.new
+    @news = News.new(story_type: :main)
   end
 
-  # POST /news
+  def new_secondary
+    @news = News.new(story_type: :secondary)
+    render :new
+  end
+
+  def new_gallery
+    @news = News.new(story_type: :gallery)
+    render :new
+  end
+
 def create
   @news = News.new(news_params)
-
-  if @news.is_main?
-    News.update_all(is_main: false)   # 👈 HERE
-  end
+  @news.user = current_user   # 🔥 IMPORTANT
 
   if @news.save
-    redirect_to news_index_path, notice: "Story published successfully."
+    redirect_to news_path(@news), notice: "Story published"
   else
     render :new
   end
 end
 
-  # GET /news/:id/edit
   def edit
-  @news = News.find(params[:id])   # 🔥 THIS LINE IS REQUIRED
-end
-
-  # PATCH/PUT /news/:id
-def update
-  @news = News.find(params[:id])
-
-  if @news.update(news_params)
-    redirect_to @news, notice: "Updated successfully"
-  else
-    render :edit
   end
-end
 
-  # DELETE /news/:id
+  def update
+    if @news.update(news_params)
+      redirect_to news_path(@news), notice: "Story updated successfully"
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @news.destroy
-    redirect_to news_index_path, notice: "News item deleted successfully."
+    redirect_to news_index_path, notice: "Deleted"
   end
 
+  def follow
+  current_user.follows.create(followed_id: params[:id])
+  redirect_back fallback_location: root_path
+end
+
+def unfollow
+  current_user.follows.find_by(followed_id: params[:id])&.destroy
+  redirect_back fallback_location: root_path
+end
+
+  # =========================
+  # PRIVATE
+  # =========================
   private
 
   def set_news
     @news = News.find(params[:id])
   end
 
-def news_params
-  params.require(:news).permit(:title, :category, :writer, :content, images: [])
-end
-
-def require_login
-  unless current_user
-    redirect_to login_path, alert: "Please log in to access news"
-  end
-end
-
   def require_admin
     unless current_user&.admin?
-      redirect_to root_path, alert: "Admins only"
+      redirect_to news_index_path, alert: "Not authorized"
     end
   end
+
+def news_params
+  params.require(:news).permit(
+    :title,
+    :writer,
+    :category,
+    :story_type,
+    :placement,
+    :content,
+    media: []
+  )
+end
 end

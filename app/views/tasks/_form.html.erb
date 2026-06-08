@@ -1,52 +1,57 @@
-<div class="form-page">
+<%= form_with model: @task do |form| %>
 
-<%= form_with model: @task do |f| %>
-
-<div>
-<%= f.label :title %>
-<%= f.text_field :title %>
+<div class="form-group">
+<%= form.label :title %>
+<%= form.text_field :title %>
 </div>
 
-<div>
-<%= f.label :description %>
-<%= f.text_area :description %>
+<div class="form-group">
+<%= form.label :description %>
+<%= form.text_area :description %>
 </div>
 
-<div>
-<%= f.label :priority %>
-<%= f.select :priority, Task.priorities.keys %>
+<div class="form-group">
+<%= form.label :priority %>
+<%= form.select :priority, Task.priorities.keys %>
 </div>
 
-<div>
-<%= f.label :status %>
-<%= f.select :status, Task.statuses.keys %>
+<div class="form-group">
+<%= form.label :status %>
+<%= form.select :status, Task.statuses.keys %>
 </div>
 
-<div>
-<%= f.label :due_date %>
-<%= f.date_field :due_date %>
+<div class="form-group">
+<%= form.label :due_date %>
+<%= form.date_field :due_date %>
 </div>
 
-<div>
-<%= f.label :user_id, "Assign To" %>
-<%= f.collection_select :user_id, User.all, :id, :name %>
+
+<div class="form-group">
+  <%= form.label :assigned_to_id, "Assign To" %>
+
+  <%= form.collection_select(
+        :assigned_to_id,
+        User.order(:name),
+        :id,
+        :name,
+        { prompt: "Select User" },
+        class: "form-control"
+      ) %>
 </div>
-<div>
-<%= f.file_field :files, multiple: true %>
+<div class="form-group">
+<%= form.file_field :files, multiple: true %>
 </div>
 
-<div>
-<%= f.submit "Create Task" %>
+<div class="form-group">
+<%= form.submit "Create" %>
 </div>
-<div>
+<div class="form-group">
 
-<%#= f.label :user_id, "Assign To" %>
+<%#= form.label :user_id, "Assign To" %>
 
-<%#=f.collection_select :user_id, User.all, :id, :name %>
+<%#=form.collection_select :user_id, User.all, :id, :name %>
 
 </div>
 
 
 <% end %>
-
-</div>

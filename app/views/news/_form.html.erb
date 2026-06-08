@@ -1,0 +1,71 @@
+<%= form_with model: @news, local: true, html: { multipart: true, class: "news-form" } do |f| %>
+
+  <!-- TITLE -->
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, required: true %>
+  </div>
+
+  <!-- WRITER -->
+  <div class="form-group">
+    <%= f.label :writer %>
+    <%= f.text_field :writer %>
+  </div>
+
+  <!-- CATEGORY -->
+  <div class="form-group">
+    <%= f.label :category %>
+    <%= f.select :category,
+        News.categories.keys.map { |c| [c.titleize, c] },
+        prompt: "Select Category" %>
+  </div>
+
+  <!-- STORY TYPE -->
+  <div class="form-group">
+    <%= f.label :story_type %>
+    <%= f.select :story_type,
+        News.story_types.keys.map { |t| [t.titleize, t] },
+        prompt: "Select Story Type" %>
+  </div>
+
+  <!-- PLACEMENT (COLUMN POSITIONING) -->
+  <div class="form-group">
+    <%= f.label :placement, "Page Placement" %>
+    <%= f.select :placement,
+        News.placements.keys.map { |p| [p.titleize, p] },
+        prompt: "Select Placement" %>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="form-group">
+  <%= f.label :content %>
+  <%= f.text_area :content, class: "tinymce" %>
+  
+</div>
+
+  <!-- MAIN IMAGE / MULTIPLE IMAGES -->
+<div class="form-group">
+  <%= f.label :media, "Upload Images or Videos" %>
+  <%= f.file_field :media,
+      multiple: true,
+      accept: "image/*,video/*" %>
+</div>
+
+  <!-- GALLERY (ONLY USED IF STORY TYPE = gallery) -->
+  <div class="form-group">
+ <div class="form-group">
+  <%= f.label :media, "Upload Images or Videos" %>
+  <%= f.file_field :media,
+      multiple: true,
+      accept: "image/*,video/*" %>
+</div>
+
+  <!-- SUBMIT -->
+  <div class="form-actions">
+    <%= f.submit class: "submit-btn" %>
+  </div>
+
+<% end %>
+
+
+

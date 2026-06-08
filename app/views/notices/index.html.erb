@@ -1,0 +1,111 @@
+<div class="noticeboard-page">
+
+  <div class="noticeboard-header">
+    <h1>Noticeboard</h1>
+
+    <hr>
+
+    <% if current_user&.admin? %>
+      <%= link_to "Upload Notice",
+          new_notice_path,
+          class: "upload-btn" %>
+    <% end %>
+  </div>
+
+  <% if @notices.any? %>
+
+    <div class="notice-grid">
+
+      <% @notices.each do |notice| %>
+
+        <div class="notice-card">
+
+          <!-- PREVIEW -->
+          <div class="notice-preview">
+
+            <% if notice.document.attached? %>
+
+              <% if notice.document.content_type.include?("image") %>
+
+                <%= image_tag notice.document,
+                    class: "notice-image" %>
+
+              <% elsif notice.document.content_type == "application/pdf" %>
+
+                <div class="pdf-preview">
+                  PDF Document
+                </div>
+
+              <% else %>
+
+                <div class="doc-preview">
+                  Word Document
+                </div>
+
+              <% end %>
+
+            <% end %>
+
+          </div>
+
+          <!-- CONTENT -->
+          <div class="notice-content">
+
+            <h3><%= notice.title %></h3>
+
+            <p>
+              Uploaded by
+              <strong><%= notice.user.name %></strong>
+            </p>
+
+            <p>
+              <%= notice.created_at.strftime("%b %d, %Y") %>
+            </p>
+
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="notice-actions">
+
+            <%= link_to "View",
+                rails_blob_path(
+                  notice.document,
+                  disposition: "inline"
+                ),
+                target: "_blank",
+                class: "view-btn" %>
+
+            <%= link_to "Download",
+                rails_blob_path(
+                  notice.document,
+                  disposition: "attachment"
+                ),
+                class: "download-btn" %>
+
+            <% if current_user&.admin? %>
+
+              <%= button_to "Delete",
+                  notice_path(notice),
+                  method: :delete,
+                  data: { confirm: "Delete notice?" },
+                  class: "delete-btn" %>
+
+            <% end %>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="empty-notices">
+      <h2>No notices uploaded yet</h2>
+    </div>
+
+  <% end %>
+
+</div>

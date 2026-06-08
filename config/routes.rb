@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+
   get "/games", to: "pages#games", as: :games
 
   # =========================
@@ -16,20 +17,63 @@ Rails.application.routes.draw do
   get "/admin/logs", to: "admin#logs", as: :admin_logs
 
   # =========================
-  # MAIN FEATURES
+  # USERS (FIXED ✅)
+  # =========================
+  resources :users do
+    member do
+      post :follow
+      delete :unfollow
+      patch :toggle_suspend
+      patch :update_role
+      patch :update_password
+      get :edit_password
+    end
+
+    collection do
+      get :autocomplete
+    end
+  end
+
+  resources :notices
+
+  # =========================
+  # NEWS
+  # =========================
+  resources :news do
+    collection do
+      patch :sort
+      get :editor
+    end
+
+    member do
+      patch :move
+    end
+  end
+
+  get "/mission", to: "pages#mission", as: :mission
+  get "/vision", to: "pages#vision", as: :vision
+  get "/values", to: "pages#values", as: :values
+
+  # =========================
+  # TASKS
   # =========================
   resources :tasks do
     resources :comments, only: [:create]
   end
 
-  resources :comments, only: [:destroy]
-  resources :users
+  resources :conversations do
+  resources :messages, only: [:create]
+end
 
-  resources :news do
-    member do
-      patch :move
-    end
+resources :chat_rooms do
+  collection do
+    get :new_chat   # user selection page
   end
+
+  resources :chat_messages, only: [:create]
+end
+
+  resources :comments, only: [:destroy]
 
   # =========================
   # EXTRA FEATURES
@@ -39,17 +83,11 @@ Rails.application.routes.draw do
 
   get "/reports", to: "reports#index"
   get "/notifications", to: "notifications#index"
+  delete "/logout", to: "sessions#destroy"
 
-  patch "/users/:id/toggle_suspend", to: "users#toggle_suspend", as: "toggle_suspend"
-  patch "/users/:id/update_role", to: "users#update_role", as: "update_role"
-  patch "/users/:id/update_password", to: "users#update_password", as: "update_password"
-  get "/users/:id/edit_password", to: "users#edit_password", as: "edit_password"
-
-  # Autocomplete
-  get "users/autocomplete", to: "users#autocomplete"
-  get "tasks/autocomplete", to: "tasks#autocomplete"
-
-  # Typing indicators
+  # =========================
+  # TYPING INDICATORS
+  # =========================
   post "/typing", to: "comments#typing"
   post "/stop_typing", to: "comments#stop_typing"
 end

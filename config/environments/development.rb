@@ -1,6 +1,11 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
+   config.cache_classes = false
+  config.eager_load = false
+  config.consider_all_requests_local = true
+  config.server_timing = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
@@ -43,6 +48,7 @@ config.action_mailer.smtp_settings = {
   authentication: "plain",
   enable_starttls_auto: true
 }
+
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false

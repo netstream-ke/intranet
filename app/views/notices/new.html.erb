@@ -1,0 +1,33 @@
+<div class="notice-form-page">
+
+  <h1>Upload Notice</h1>
+
+  <%= form_with model: @notice,
+                local: true,
+                html: { multipart: true, class: "notice-form" } do |f| %>
+
+    <% if @notice.errors.any? %>
+      <div class="errors">
+        <% @notice.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :title, "Document Name" %>
+      <%= f.text_field :title, required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :document %>
+      <%= f.file_field :document, required: true %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Upload Notice", class: "submit-btn" %>
+    </div>
+
+  <% end %>
+
+</div>

@@ -2,7 +2,10 @@
 
     <!-- HEADER -->
     <div class="page-header">
-      <%= link_to "Add New Assignment", new_task_path, class: "button" %>
+      
+
+       <%= link_to "Go to Intranet", news_index_path, class: "button" %>
+       <%= link_to "Notices", notices_path, class: "button"%>
 
       <%= link_to new_task_path, class: "floating-add-button" do %>
         <i class="fas fa-plus"></i>
@@ -10,13 +13,19 @@
     </div>
     <br><br>
 
-    <!-- ================= NEW TASKS ================= -->
-    <h2>New Jobs</h2>
+    <h1>How is your day <i><%= current_user.name %>? </i></h1>
 
+
+    <!-- ================= NEW TASKS ================= -->
+    <br><br>
+    <%= link_to "Schedule a task", new_task_path, class: "button" %>
+    <br><br><br><br>
+  <h2>Scheduled Tasks</h2>
     <table>
       <thead>
         <tr>
           <th>Task</th>
+          <th>Description</th>
           <th>Assigned</th>
           <th>Action</th>
           <th>Reassign</th>
@@ -29,13 +38,15 @@
         <% @not_done_tasks.each do |task| %>
           <tr>
             <td><p><%= task.title %></p></td>
-            <td>👤 <%= task.user&.name %></td>
+  <td><p><%= task.description %></p></td>
 
-            <td><%= link_to "✏️", edit_task_path(task) %></td>
-            <td><%= link_to "🔄", edit_task_path(task) %></td>
+  <td>
+    👤 <p><%= task.assigned_to&.name || "Unassigned" %></p>
+  </td>
 
-            <td>
-              <%= button_to task_path(task),
+  <td><%= link_to "✏️", edit_task_path(task) %></td>
+  <td><%= link_to "🔄", edit_task_path(task) %></td>
+              <td><%= button_to task_path(task),
                   method: :delete,
                   data: { confirm: "Delete?" } do %>
                 🗑
@@ -60,7 +71,7 @@
 
     <!-- ================= ONGOING ================= -->
     <br>
-    <h2>Jobs In Progress</h2>
+    <h2>Your tasks in progress</h2>
     <table>
       <thead>
         <tr>
@@ -73,9 +84,9 @@
       <tbody>
         <% @ongoing_tasks.each do |task| %>
           <tr>
-            <td><%= task.title %></td>
-            <td><%= task.user&.name %></td>
-            <td><%= task.started_at %></td>
+            <td><p><%= task.title %></p></td>
+            <td><p><%= task.user&.name %></p></td>
+            <td><p><%= task.started_at %></p></td>
             <td><%= link_to "Edit", edit_task_path(task) %></td>
           </tr>
         <% end %>
@@ -108,35 +119,29 @@
       </div>
     <% end %>
 
+    <!-- TOGGLE COMMENTS -->
+    <button class="toggle-comments-btn"
+            data-action="click->comments#toggle"
+            data-task-id="<%= task.id %>">
+      
+    </button>
 
     <!-- COMMENT SECTION -->
     <div id="comments-<%= task.id %>" class="comment-section hidden">
       <%= turbo_stream_from "comments_#{task.id}" %>
 
       <!-- NEW COMMENT FORM -->
-     <span> <%= form_with model: [task, Comment.new], local: true, html: { class: "comment-form" } do |f| %>
-
-        <div class="comment-text-area">
-        
+      <%= form_with model: [task, Comment.new], local: true, html: { class: "comment-form" } do |f| %>
         <%= f.text_area :content,
                         class: "comment-input",
-                        placeholder: "Make a comment..." %></span>
-       <span> <%= f.submit "Send", class: "comment-submit" %></span>
-        </div>
+                        placeholder: "Comment..." %>
+        <%= f.submit "Send", class: "comment-submit" %>
       <% end %>
 
       <!-- COMMENTS THREAD -->
       <div class="comment-thread">
         <% task.comments.top_level.each do |comment| %>
           <%= render partial: "comments/comment", locals: { comment: comment } %>
-          <% if current_user&.admin? || comment.user == current_user %>
-  <%= button_to "Delete",
-      comment_path(comment),
-      method: :delete,
-      data: { confirm: "Delete this comment?" },
-      class: "delete-btn" %>
-<% end %>
-
         <% end %>
       </div>
     </div>
