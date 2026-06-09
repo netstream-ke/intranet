@@ -71,6 +71,3 @@ private
   def set_default_role
     self.role ||= :employee
   end
-
-
-  

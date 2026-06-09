@@ -1,5 +1,4 @@
 class ReportsController < ApplicationController
-
   def index
     @tasks = Task.completed
 
@@ -22,6 +21,4 @@ class ReportsController < ApplicationController
       0
     end
   end
-  
-
 end

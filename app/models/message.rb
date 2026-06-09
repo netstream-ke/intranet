@@ -12,7 +12,6 @@ def detect_mentions
   usernames = body.scan(/@(\w+)/).flatten
 
   usernames.each do |username|
-
     mentioned_user = User.find_by(name: username)
 
     next unless mentioned_user
@@ -25,7 +24,4 @@ def detect_mentions
     )
   end
 end
-
-
 end
-

@@ -5,4 +5,3 @@ def index
   current_user.user_notifications.update_all(read: true)
 end
 end
-

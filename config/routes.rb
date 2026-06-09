@@ -58,11 +58,11 @@ Rails.application.routes.draw do
   # TASKS
   # =========================
   resources :tasks do
-    resources :comments, only: [:create]
+    resources :comments, only: [ :create ]
   end
 
   resources :conversations do
-  resources :messages, only: [:create]
+  resources :messages, only: [ :create ]
 end
 
 resources :chat_rooms do
@@ -70,10 +70,10 @@ resources :chat_rooms do
     get :new_chat   # user selection page
   end
 
-  resources :chat_messages, only: [:create]
+  resources :chat_messages, only: [ :create ]
 end
 
-  resources :comments, only: [:destroy]
+  resources :comments, only: [ :destroy ]
 
   # =========================
   # EXTRA FEATURES

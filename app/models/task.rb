@@ -21,7 +21,7 @@ validates :user, presence: true
     medium: 1,
     high: 2
   }
-  
+
   def due_in_days
     return nil unless due_date
 

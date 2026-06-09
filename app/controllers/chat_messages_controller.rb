@@ -20,5 +20,3 @@ end
     params.require(:chat_message).permit(:body)
   end
 end
-
-

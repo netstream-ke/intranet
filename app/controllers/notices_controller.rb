@@ -1,7 +1,7 @@
 class NoticesController < ApplicationController
   before_action :require_login
-  before_action :set_notice, only: [:show, :destroy]
-  before_action :require_admin, only: [:new, :create, :destroy]
+  before_action :set_notice, only: [ :show, :destroy ]
+  before_action :require_admin, only: [ :new, :create, :destroy ]
 
   def index
     @notices = Notice.order(created_at: :desc)

@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-
-  before_action :redirect_if_logged_in, only: [:new]
+  before_action :redirect_if_logged_in, only: [ :new ]
 
   def new
   end
@@ -44,7 +43,6 @@ def create
     flash.now[:alert] = "Invalid email or password"
     render :new
   end
-
 end
 
   def redirect_if_logged_in
@@ -58,7 +56,4 @@ end
 
   redirect_to login_path, notice: "Logged out"
 end
-
-  
-
 end

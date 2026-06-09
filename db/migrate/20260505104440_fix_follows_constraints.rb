@@ -3,6 +3,6 @@ class FixFollowsConstraints < ActiveRecord::Migration[8.0]
     change_column_null :follows, :follower_id, false
     change_column_null :follows, :followed_id, false
 
-    add_index :follows, [:follower_id, :followed_id], unique: true
+    add_index :follows, [ :follower_id, :followed_id ], unique: true
   end
 end

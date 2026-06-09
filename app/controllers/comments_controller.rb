@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
-
   before_action :require_login
-  before_action :require_admin, only: [:destroy]
+  before_action :require_admin, only: [ :destroy ]
 
 def create
   @task = Task.find(params[:task_id])
@@ -17,11 +16,11 @@ def create
   end
 end
 
-def typing  
-  ActionCable.server.broadcast(  
-    "comments_#{params[:task_id]}",  
-    { typing: "#{current_user.email} is typing..." }  
-  )  
+def typing
+  ActionCable.server.broadcast(
+    "comments_#{params[:task_id]}",
+    { typing: "#{current_user.email} is typing..." }
+  )
 end
 
  def current_user

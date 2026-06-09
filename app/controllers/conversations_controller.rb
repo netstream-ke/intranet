@@ -16,7 +16,7 @@ class ConversationsController < ApplicationController
     user = User.find(params[:user_id])
 
     existing = Conversation.joins(:conversation_participants)
-                           .where(conversation_participants: { user_id: [current_user.id, user.id] })
+                           .where(conversation_participants: { user_id: [ current_user.id, user.id ] })
                            .group("conversations.id")
                            .having("COUNT(conversations.id) = 2")
                            .first
@@ -34,5 +34,3 @@ class ConversationsController < ApplicationController
     redirect_to conversation_path(@conversation)
   end
 end
-
-

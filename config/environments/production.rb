@@ -6,7 +6,7 @@ Rails.application.configure do
   config.require_master_key = false
 
 
-  
+
   # Code is not reloaded between requests.
   config.enable_reloading = false
 

@@ -1,8 +1,8 @@
 class NewsController < ApplicationController
-  require 'date'
+  require "date"
   before_action :require_login
-  before_action :set_news, only: [:show, :edit, :update, :destroy]
-  before_action :require_admin, only: [:new, :create, :edit, :update, :destroy, :sort]
+  before_action :set_news, only: [ :show, :edit, :update, :destroy ]
+  before_action :require_admin, only: [ :new, :create, :edit, :update, :destroy, :sort ]
 
   layout "news"
 

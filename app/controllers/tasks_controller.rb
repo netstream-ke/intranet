@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
-
    before_action :authenticate_user
-  before_action :set_task, only: [:edit, :update, :destroy]
+  before_action :set_task, only: [ :edit, :update, :destroy ]
 
 def index
   visible_tasks = Task.where(
@@ -17,7 +16,7 @@ end
   def new
     @task = Task.new
   end
-  
+
 
 def create
   @task = Task.new(task_params)
@@ -63,7 +62,6 @@ def update_status
 end
 
   def update
-
     new_status = params[:task][:status]
 
     if new_status == "ongoing" && @task.started_at.nil?
@@ -114,6 +112,4 @@ def task_params
     files: []
   )
 end
-  
-
 end
