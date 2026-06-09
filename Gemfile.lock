@@ -224,7 +224,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (8.0.0)
+    puma (8.0.2)
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
@@ -397,14 +397,12 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
-  mini_magick
   pg
   propshaft
   puma (>= 5.0)
   pundit
   rails (~> 8.0.3)
   rubocop-rails-omakase
-  ruby-vips
   selenium-webdriver
   solid_cable
   solid_cache
