@@ -1,0 +1,27 @@
+<div class="chat-page">
+
+  <% other_user = @chat_room.users.where.not(id: current_user.id).first %>
+
+  <h2>
+    Chat with <%= other_user&.name || "Unknown User" %>
+  </h2>
+
+  <div id="messages">
+    <% @messages.each do |message| %>
+
+      <div class="message">
+        <strong><%= message.user.name %>:</strong>
+        <%= message.body %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="chat-form">
+    <%= form_with model: [@chat_room, @chat_message], local: true do |f| %>
+      <%= f.text_field :body, placeholder: "Type a message..." %>
+      <%= f.submit "Send" %>
+    <% end %>
+  </div>
+
+</div>

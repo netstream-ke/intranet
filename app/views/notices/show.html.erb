@@ -1,0 +1,41 @@
+<div class="notice-show-page">
+
+  <h1><%= @notice.title %></h1>
+
+  <p>
+    Uploaded by <strong><%= @notice.user.name %></strong>
+  </p>
+
+  <div class="notice-document">
+
+    <% if @notice.document.content_type.include?("image") %>
+
+      <%= image_tag @notice.document,
+                    class: "full-notice-image" %>
+
+    <% elsif @notice.document.content_type == "application/pdf" %>
+
+      <iframe
+        src="<%= rails_blob_path(@notice.document, disposition: 'inline') %>"
+        width="100%"
+        height="700">
+      </iframe>
+
+    <% else %>
+
+      <p>Preview unavailable for this document type.</p>
+
+    <% end %>
+
+  </div>
+
+  <div class="notice-actions">
+
+    <%= link_to "Download Document",
+                rails_blob_path(@notice.document,
+                disposition: "attachment"),
+                class: "download-btn" %>
+
+  </div>
+
+</div>

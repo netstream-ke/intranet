@@ -1,0 +1,14 @@
+
+
+
+<%= turbo_stream.append "comments_task_#{@task.id}" do %>
+  <div class="comment">
+    <strong><%= @comment.user.name %>:</strong>
+    <%= @comment.content %>
+
+<%= turbo_stream.append "comments_#{@task.id}" do %>
+  <%= render @comment %>
+<% end %>
+
+  </div>
+<% end %>

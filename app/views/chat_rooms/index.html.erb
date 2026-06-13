@@ -1,0 +1,14 @@
+<% @chat_rooms.each do |room| %>
+
+  <% unread_count = room.chat_messages.where(read: false)
+                                      .where.not(user: current_user).count %>
+
+  <div class="chat-card">
+    <%= link_to "Chat", chat_room_path(room) %>
+
+    <% if unread_count > 0 %>
+      <span class="badge"><%= unread_count %> new</span>
+    <% end %>
+  </div>
+
+<% end %>

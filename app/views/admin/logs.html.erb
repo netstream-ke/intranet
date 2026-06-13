@@ -1,0 +1,9 @@
+<h2>Audit Logs</h2>
+
+<% AuditLog.all.each do |log| %>
+  <p>
+    <strong><%= log.user.name %></strong>
+    <%= log.action %>
+    (<%= log.record_type %> ID: <%= log.record_id %>)
+  </p>
+<% end %>

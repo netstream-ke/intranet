@@ -1,0 +1,25 @@
+
+<div class="chat-user-select">
+
+  <h2>Chat will a colleague</h2>
+
+  <div class="user-list">
+
+    <% @users.each do |user| %>
+      <div class="user-card">
+
+        <div class="user-name">
+          <%= user.name %>
+        </div>
+
+        <%= button_to "Chat",
+              chat_rooms_path(user_id: user.id),
+              method: :post,
+              class: "chat-btn" %>
+
+      </div>
+    <% end %>
+
+  </div>
+
+</div>

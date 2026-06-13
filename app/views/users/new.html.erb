@@ -1,0 +1,34 @@
+<div class="user-form">
+
+  <h1>Create User</h1>
+
+  <%= form_with model: @user, local: true do |f| %>
+
+    <% if @user.errors.any? %>
+      <div class="error-box">
+        <% @user.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+
+    <%= f.label :role %>
+    <%= f.select :role, ["admin", "employee"] %>
+
+    <%= f.submit "Create User" %>
+
+  <% end %>
+
+</div>

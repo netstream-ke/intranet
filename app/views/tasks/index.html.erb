@@ -1,0 +1,149 @@
+
+
+    <!-- HEADER -->
+    <div class="page-header">
+      
+
+       <%= link_to "Go to Intranet", news_index_path, class: "button" %>
+       <%= link_to "Notices", notices_path, class: "button"%>
+
+      <%= link_to new_task_path, class: "floating-add-button" do %>
+        <i class="fas fa-plus"></i>
+      <% end %>
+    </div>
+    <br><br>
+
+    <h1>How is your day <i><%= current_user.name %>? </i></h1>
+
+
+    <!-- ================= NEW TASKS ================= -->
+    <br><br>
+    <%= link_to "Schedule a task", new_task_path, class: "button" %>
+    <br><br><br><br>
+  <h2>Scheduled Tasks</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Assigned</th>
+          <th>Action</th>
+          <th>Reassign</th>
+          <th>Delete</th>
+          <th>Due</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @not_done_tasks.each do |task| %>
+          <tr>
+            <td><p><%= task.title %></p></td>
+  <td><p><%= task.description %></p></td>
+
+  <td>
+    👤 <p><%= task.assigned_to&.name || "Unassigned" %></p>
+  </td>
+
+  <td><%= link_to "✏️", edit_task_path(task) %></td>
+  <td><%= link_to "🔄", edit_task_path(task) %></td>
+              <td><%= button_to task_path(task),
+                  method: :delete,
+                  data: { confirm: "Delete?" } do %>
+                🗑
+              <% end %>
+            </td>
+
+            <td>
+              <% if task.due_date %>
+                <% if task.due_in_days < 0 %>
+                  <span class="badge overdue">Overdue</span>
+                <% elsif task.due_in_days == 0 %>
+                  <span class="badge today">Today</span>
+                <% else %>
+                  <span class="badge upcoming"><%= task.due_in_days %> days</span>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- ================= ONGOING ================= -->
+    <br>
+    <h2>Your tasks in progress</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>User</th>
+          <th>Started</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ongoing_tasks.each do |task| %>
+          <tr>
+            <td><p><%= task.title %></p></td>
+            <td><p><%= task.user&.name %></p></td>
+            <td><p><%= task.started_at %></p></td>
+            <td><%= link_to "Edit", edit_task_path(task) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+<br>
+<h2>Completed Assignments</h2>
+<br>
+
+<% @completed_tasks.each do |task| %>
+  <div class="task-card completed-task" data-controller="comments">
+    
+    <!-- TASK INFO -->
+    <h3><%= task.title %></h3>
+    <p>
+      Completed by: <strong><%= task.user&.name %></strong> |
+      Duration: <strong><%= task.duration_in_minutes %> mins</strong>
+    </p>
+
+    <!-- FILES -->
+    <% if task.files.attached? %>
+      <div class="task-files">
+        <% task.files.each do |file| %>
+          <% if file.image? %>
+            <%= image_tag file, width: 100 %>
+          <% else %>
+            <%= link_to file.filename, rails_blob_path(file, disposition: "attachment") %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- TOGGLE COMMENTS -->
+    <button class="toggle-comments-btn"
+            data-action="click->comments#toggle"
+            data-task-id="<%= task.id %>">
+      
+    </button>
+
+    <!-- COMMENT SECTION -->
+    <div id="comments-<%= task.id %>" class="comment-section hidden">
+      <%= turbo_stream_from "comments_#{task.id}" %>
+
+      <!-- NEW COMMENT FORM -->
+      <%= form_with model: [task, Comment.new], local: true, html: { class: "comment-form" } do |f| %>
+        <%= f.text_area :content,
+                        class: "comment-input",
+                        placeholder: "Comment..." %>
+        <%= f.submit "Send", class: "comment-submit" %>
+      <% end %>
+
+      <!-- COMMENTS THREAD -->
+      <div class="comment-thread">
+        <% task.comments.top_level.each do |comment| %>
+          <%= render partial: "comments/comment", locals: { comment: comment } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,65 @@
+<div class="author-profile">
+
+<div class="author-header">
+  <% if @user.avatar.attached? %>
+    <%= image_tag @user.avatar, class: "author-img" %>
+  <% else %>
+    <div class="avatar-fallback"><%= @user.name[0] %></div>
+  <% end %>
+
+  <div>
+    <h1>
+      <%= @user.name %>
+      <% if @user.verified? %>
+        <span class="verified-badge">✔ Verified Journalist</span>
+      <% end %>
+    </h1>
+
+    <!-- ✅ ADD COUNTS HERE -->
+    <div class="author-stats">
+      <span><strong><%= @user.followers_count || 0 %></strong> Followers</span>
+      <span><strong><%= @user.following_count || 0 %></strong> Following</span>
+    </div>
+
+    <p><%= @user.bio.presence || "No bio available." %></p>
+  </div>
+</div>
+
+  <!-- FOLLOW BUTTON -->
+  <!--div class="follow-section">
+    <#%= render "follow_button", user: @user %>
+  </div-->
+
+  <br>
+
+  <hr>
+
+  <!-- ARTICLES -->
+  <h2>Articles by <%= @user.name %></h2>
+
+  <% @articles.each do |article| %>
+  <div class="article-card">
+    <h3><%= link_to article.title, news_path(article) %></h3>
+
+    <% if article.content.present? %>
+      <p><%= truncate(article.content.to_plain_text, length: 180) %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<% unless current_user == @user %>
+
+  <%= button_to "Message User",
+      conversations_path(user_id: @user.id),
+      method: :post,
+      class: "button" %>
+
+<% end %>
+
+
+<%= button_to "Message",
+    chat_rooms_path(user_id: @user.id),
+    method: :post %>
+  
+
+</div>

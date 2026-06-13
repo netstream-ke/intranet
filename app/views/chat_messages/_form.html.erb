@@ -1,0 +1,9 @@
+<%= form_with model: [chat_room, ChatMessage.new], local: true do |f| %>
+
+  <div class="chat-input">
+    <%= f.text_field :body, placeholder: "Type a message..." %>
+  </div>
+
+  <%= f.submit "Send" %>
+
+<% end %>

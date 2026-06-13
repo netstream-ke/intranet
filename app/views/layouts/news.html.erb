@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jedison Updates</title>
+ 
+      <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+      <%= javascript_importmap_tags %>
+</head>
+
+<body>
+  <%= yield %>
+</body>
+
+<footer class="footer">
+
+  <div class="footer-left">
+    © <%= Time.current.year %> teem
+  </div>
+
+  <div class="footer-center">
+    <%= link_to "Planner", tasks_path %>
+       <%= link_to "Mission", mission_path, class: "tab" %>
+
+<%= link_to "Vision", vision_path, class: "tab" %>
+
+<%= link_to "Values", values_path, class: "tab" %>
+  </div>
+
+  <div class="footer-right">
+    <% if current_user %>
+      Logged in as <%= current_user.name %>
+    <% end %>
+  </div>
+
+</footer>
+
+
+</body>
+</html>

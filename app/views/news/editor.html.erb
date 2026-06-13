@@ -1,0 +1,39 @@
+<div class="editor-container">
+
+  <h1>Homepage Editor</h1>
+
+  <div class="columns">
+
+    <!-- LEFT -->
+    <div class="column" data-placement="left">
+      <h2>Left</h2>
+      <% @left.each do |story| %>
+        <div class="draggable" data-id="<%= story.id %>">
+          <%= story.title %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- CENTER -->
+    <div class="column" data-placement="center">
+      <h2>Center</h2>
+      <% @center.each do |story| %>
+        <div class="draggable" data-id="<%= story.id %>">
+          <%= story.title %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="column" data-placement="right">
+      <h2>Right</h2>
+      <% @right.each do |story| %>
+        <div class="draggable" data-id="<%= story.id %>">
+          <%= story.title %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="comment-item" id="comment-<%= comment.id %>">
+
+  <div class="comment-avatar">
+    <%= comment.user&.name&.first&.upcase %>
+  </div>
+
+  <div class="comment-body">
+
+    <div class="comment-header">
+      <span class="comment-user"><%= comment.user&.name %></span>
+      <span class="comment-time">
+        <%= time_ago_in_words(comment.created_at) %> ago
+      </span>
+    </div>
+
+    <div class="comment-bubble">
+      <%= comment.content %>
+    </div>
+
+    <!-- DELETE BUTTON -->
+    <% if current_user&.admin? || comment.user == current_user %>
+      <%= button_to "Delete",
+          comment_path(comment),
+          method: :delete,
+          data: { confirm: "Delete this comment?" },
+          class: "delete-btn" %>
+    <% end %>
+
+    <!-- REPLY FORM (ALWAYS VISIBLE) -->
+    <div class="reply-form">
+      <%= form_with model: [comment.task, Comment.new], local: true do |f| %>
+        <%= f.hidden_field :parent_id, value: comment.id %>
+        <%= f.text_area :content, class: "comment-input", placeholder: "Reply..." %>
+        <%= f.submit "Send", class: "comment-submit" %>
+      <% end %>
+    </div>
+
+    <!-- REPLIES (ALWAYS VISIBLE) -->
+    <% if comment.replies.any? %>
+      <div class="replies">
+        <% comment.replies.each do |reply| %>
+          <%= render partial: "comments/comment", locals: { comment: reply } %>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

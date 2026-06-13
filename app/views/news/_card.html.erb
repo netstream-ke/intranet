@@ -1,0 +1,8 @@
+<div class="news-card">
+  <% if story.images.attached? %>
+    <%= image_tag story.images.first %>
+  <% end %>
+
+  <h3><%= link_to story.title, news_path(story) %></h3>
+  <p><%= truncate(story.content, length: 100) %></p>
+</div>

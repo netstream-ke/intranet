@@ -1,0 +1,57 @@
+<div class="user-edit-page">
+
+  <h1>Edit Profile</h1>
+
+  <%= form_with model: @user, local: true, html: { multipart: true } do |f| %>
+
+    <!-- ERROR MESSAGES -->
+    <% if @user.errors.any? %>
+      <div class="error-box">
+        <h3><%= pluralize(@user.errors.count, "error") %> prevented saving:</h3>
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- NAME -->
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+
+    <!-- BIO -->
+    <div class="form-group">
+      <%= f.label :bio %>
+      <%= f.text_area :bio, rows: 5, class: "form-control" %>
+    </div>
+
+    <!-- AVATAR UPLOAD -->
+    <div class="form-group">
+      <%= f.label :avatar %>
+      <%= f.file_field :avatar %>
+    </div>
+
+    <!-- AVATAR PREVIEW (SAFE VERSION) -->
+    <% if @user.avatar.attached? && @user.avatar.blob&.persisted? %>
+      <div class="avatar-preview">
+        <%= image_tag url_for(@user.avatar), class: "avatar-img" %>
+      </div>
+    <% end %>
+
+    <!-- SUBMIT -->
+    <div class="form-actions">
+      <%= f.submit "Update Profile", class: "btn-primary" %>
+    </div>
+
+  <% end %>
+
+</div>
