@@ -41,10 +41,10 @@ def destroy
     redirect_to tasks_path, alert: "Not authorized"
   end
 end
-end
 
-  private
+private
 
 def comment_params
   params.require(:comment).permit(:content, :parent_id)
+end
 end

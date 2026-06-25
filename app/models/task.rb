@@ -1,9 +1,10 @@
 class Task < ApplicationRecord
-  belongs_to :user
-
   belongs_to :assigned_to,
              class_name: "User",
              optional: true
+  
+             belongs_to :user
+
 
   has_many :comments, dependent: :destroy
   has_many_attached :files

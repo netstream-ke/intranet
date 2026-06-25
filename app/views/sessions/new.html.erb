@@ -1,12 +1,12 @@
 
   <h2>Login</h2>
   <div class="login-form">
-<%= form_with url: login_path, method: :post, local: true do |f| %>
-<%= f.label :email %>
-  <%= f.email_field :email, placeholder: "Email"%><br><br>
-  <%= f.label :password %>
-  <%= f.password_field :password, placeholder: "Password" %>
+<%= form_with url: login_path, method: :post, local: true do |form| %>
+<%= form.label :email %>
+  <%= form.email_field :email, placeholder: "Email"%><br><br>
+  <%= form.label :password %>
+  <%= form.password_field :password, placeholder: "Password" %>
 
-  <%= f.submit "Login" %>
+  <%= form.submit "Login" %>
   </div>
 <% end %>

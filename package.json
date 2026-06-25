@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build:css": "tailwindcss -i ./app/assets/tailwind/application.css -o ./app/assets/builds/application.css",
+    "build": "npm run build:css"
+  },
   "devDependencies": {
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.9",

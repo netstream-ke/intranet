@@ -3,16 +3,9 @@ class ChatMessagesController < ApplicationController
 
 def create
   @chat_room = ChatRoom.find(params[:chat_room_id])
-
-  @chat_message = @chat_room.chat_messages.create!(
-    user: current_user,
-    body: params[:chat_message][:body],
-    read: false
-  )
-
-  redirect_to chat_room_path(@chat_room)
+  @message = @chat_room.chat_messages.new(message_params)
+  @message.user = current_user
 end
-
 
   private
 

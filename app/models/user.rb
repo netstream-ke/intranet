@@ -8,7 +8,6 @@ has_many :conversation_participants, dependent: :destroy
 has_many :conversations, through: :conversation_participants
 has_many :chat_room_users
 has_many :chat_rooms, through: :chat_room_users
-has_many :messages
 has_many :chat_messages, dependent: :destroy
 has_many :user_notifications
 
@@ -23,7 +22,6 @@ validates :password,
   },
   if: -> { password.present? }
 
-  has_many :tasks
 
   has_many :assigned_tasks,
            class_name: "Task",
@@ -32,7 +30,6 @@ validates :password,
 
 has_many :tasks, dependent: :destroy
 has_many :comments, dependent: :destroy
-has_many :notifications, dependent: :destroy
 
   enum :role, {
     employee: 0,
@@ -41,6 +38,10 @@ has_many :notifications, dependent: :destroy
   }
 
   after_initialize :set_default_role, if: :new_record?
+
+  def admin?
+  role == "admin"
+end
 
   def online?
     online
@@ -65,9 +66,9 @@ after_initialize do
 end
 
 validates :email, presence: true, uniqueness: true
-end
 
 private
   def set_default_role
     self.role ||= :employee
   end
+end

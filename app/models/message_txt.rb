@@ -20,3 +20,4 @@ def detect_mentions
     )
   end
 end
+end

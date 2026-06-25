@@ -10,4 +10,8 @@ has_many :chat_messages, dependent: :destroy
       .having("COUNT(chat_room_users.user_id) = 2")
       .first
   end
+
+def actor
+  users.first
+end
 end

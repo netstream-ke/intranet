@@ -3,4 +3,7 @@ class ChatMessage < ApplicationRecord
   belongs_to :user
 
   attribute :read, :boolean, default: false
+def actor
+  user
+end
 end

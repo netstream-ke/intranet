@@ -51,7 +51,7 @@ end
 
  def destroy
   current_user&.update(online: false)
-
+  session[:user_id] = nil
   reset_session
 
   redirect_to login_path, notice: "Logged out"

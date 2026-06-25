@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get "/admin/logs", to: "admin#logs", as: :admin_logs
 
   # =========================
-  # USERS (FIXED ✅)
+  # USERS 
   # =========================
   resources :users do
     member do
