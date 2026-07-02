@@ -390,7 +390,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bootsnap
-  brakeman (~> 8.0.5)
+  brakeman
   capybara
   debug
   image_processing (~> 1.2)
