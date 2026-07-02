@@ -2,7 +2,6 @@ class Task < ApplicationRecord
   belongs_to :assigned_to,
              class_name: "User",
              optional: true
-  
              belongs_to :user
 
 

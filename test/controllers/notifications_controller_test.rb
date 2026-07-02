@@ -2,7 +2,7 @@ require "test_helper"
 
 class NotificationsControllerTest < ActionDispatch::IntegrationTest
   fixtures :users
-  
+
   setup do
     @user = users(:one)
 

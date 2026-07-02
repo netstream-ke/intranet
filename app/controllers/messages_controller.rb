@@ -13,18 +13,8 @@ class MessagesController < ApplicationController
       redirect_to conversation_path(@conversation)
     else
       @messages = @conversation.messages
-      render "conversations/show"
+      render "conversations/show", status: :unprocessable_entity
     end
-  end
-
-    chat_room = ChatRoom.find(params[:chat_room_id])
-
-    message = chat_room.messages.new(message_params)
-    message.user = current_user
-
-    message.save
-
-    redirect_to chat_room_path(chat_room)
   end
 
   private
@@ -32,6 +22,4 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:body)
   end
-
-
 end

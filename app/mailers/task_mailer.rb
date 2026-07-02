@@ -1,5 +1,4 @@
 class TaskMailer < ApplicationMailer
-
 def task_assigned(task)
   return unless task.user.present?
 
@@ -12,4 +11,5 @@ def task_overdue(task)
 
   @task = task
   mail(to: task.user.email, subject: "Task Overdue")
+end
 end

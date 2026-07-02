@@ -1,7 +1,6 @@
 require "test_helper"
 
 class AdminControllerTest < ActionDispatch::IntegrationTest
-  
   setup do
     @admin = User.find_by(role: :admin)
   end

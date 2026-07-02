@@ -2,7 +2,6 @@
 require "test_helper"
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
-
 fixtures :tasks
 
   setup do
