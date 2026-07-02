@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     :update_role, :toggle_suspend
   ]
 
-  before_action :require_admin, only: [:update_role]
+  before_action :require_admin, only: [ :update_role ]
 
   # =========================
   # LIST USERS (ADMIN)
