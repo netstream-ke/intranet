@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     :update_role, :toggle_suspend
   ]
 
-  before_action :require_admin, only: [ :update_role ]
+  before_action :require_admin, only: [:update_role]
 
   # =========================
   # LIST USERS (ADMIN)
@@ -49,31 +49,6 @@ class UsersController < ApplicationController
   # EDIT PROFILE
   # =========================
   def edit
-  end
-
-def update_role
-  @user = User.find(params[:id])
-
-  new_role =
-    if @user.admin?
-      :employee
-    else
-      :admin
-    end
-
-  if @user.update(role: new_role)
-    redirect_to users_path, notice: "Role updated successfully."
-  else
-    redirect_to users_path, alert: "Unable to update role."
-  end
-end
-
-  def update
-    if @user.update(user_params)
-      redirect_to user_path(@user), notice: "Profile updated"
-    else
-      render :edit
-    end
   end
 
   # =========================
