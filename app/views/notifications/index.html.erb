@@ -1,4 +1,3 @@
-
 <div class="notifications-page">
 
   <h1>Notifications</h1>
@@ -7,13 +6,13 @@
 
     <div class="notification-card">
 
-      <% if notification.chat_room.present? %>
+      <% if notification.notifiable.present? %>
 
-        <%= link_to chat_room_path(notification.chat_room),
+        <%= link_to polymorphic_path(notification.notifiable),
             class: "notification-link" do %>
 
-          <strong><%= notification.actor.name %></strong>
-          sent you a new message
+          <strong><%= notification.actor&.name || "Unknown User" %></strong>
+          sent you a new notification
 
           <small>
             <%= time_ago_in_words(notification.created_at) %> ago
@@ -24,7 +23,7 @@
       <% else %>
 
         <p>
-          <strong><%= notification.actor.name %></strong>
+          <strong><%= notification.actor&.name || "Unknown User" %></strong>
           sent you a notification
         </p>
 

@@ -11,7 +11,7 @@ one:
 two:
   title: MyString
   description: MyText
-  status: 1
-  priority: 1
+  status: ongoing
+  priority: medium
   due_date: 2026-03-06
   user: admin
