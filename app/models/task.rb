@@ -1,14 +1,14 @@
 class Task < ApplicationRecord
+  belongs_to :user
+
   belongs_to :assigned_to,
              class_name: "User",
              optional: true
-             belongs_to :user
-
 
   has_many :comments, dependent: :destroy
   has_many_attached :files
 
-validates :user, presence: true
+  validates :user, presence: true
 
   enum :status, {
     not_done: 0,
@@ -22,15 +22,14 @@ validates :user, presence: true
     high: 2
   }
 
+  validates :title, presence: true
+
   def due_in_days
     return nil unless due_date
 
     (due_date.to_date - Date.today).to_i
   end
 
-  validates :title, presence: true
-
-  # Calculate task duration
   def duration
     return nil unless started_at && completed_at
 

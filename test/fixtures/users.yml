@@ -1,4 +1,3 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 admin:
   name: Admin
   email: admin@intranet.com
@@ -11,6 +10,15 @@ admin:
 one:
   name: Leonard
   email: leonardkibor92@gmail.com
+  password_digest: <%= BCrypt::Password.create("Kar_elin@12034") %>
+  role: employee
+  suspended: false
+  verified: true
+  force_password_change: false
+
+two:
+  name: Jedison
+  email: jedison@intranet.com
   password_digest: <%= BCrypt::Password.create("Kar_elin@12034") %>
   role: employee
   suspended: false

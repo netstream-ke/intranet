@@ -3,10 +3,10 @@
 one:
   title: MyString
   description: MyText
-  status: 1
-  priority: 1
+  status: ongoing
+  priority: medium
   due_date: 2026-03-06
-  user: admin
+  user: one
 
 two:
   title: MyString
@@ -14,4 +14,4 @@ two:
   status: 1
   priority: 1
   due_date: 2026-03-06
-  user: two
+  user: admin

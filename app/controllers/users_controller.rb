@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     :update_role, :toggle_suspend
   ]
 
-  before_action :require_admin, only: [:update_role]
+  before_action :require_admin, only: [ :update_role ]
 
   # =========================
   # LIST USERS (ADMIN)
@@ -28,15 +28,16 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
-    @user = User.new(admin_user_params)
+def create
+  @user = User.new(admin_user_params)
+  @user.role = :employee
 
-    if @user.save
-      redirect_to users_path, notice: "User created successfully"
-    else
-      render :new
-    end
+  if @user.save
+    redirect_to users_path, notice: "User created successfully"
+  else
+    render :new, status: :unprocessable_entity
   end
+end
 
   # =========================
   # SHOW PROFILE
@@ -142,9 +143,14 @@ def user_params
   )
 end
 
-  def admin_user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
-  end
+def admin_user_params
+  params.require(:user).permit(
+    :name,
+    :email,
+    :password,
+    :password_confirmation
+  )
+end
 
   def password_params
     params.require(:user).permit(:password, :password_confirmation)
