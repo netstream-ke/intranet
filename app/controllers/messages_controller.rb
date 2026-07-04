@@ -2,24 +2,21 @@ class MessagesController < ApplicationController
   before_action :require_login
 
   def create
-    @conversation = current_user.conversations.find(params[:conversation_id])
+    chat_room = ChatRoom.find(params[:chat_room_id])
 
-    @message = @conversation.messages.build(
-      body: params[:message][:body],
-      user: current_user
-    )
+    @message = chat_room.chat_messages.new(message_params)
+    @message.user = current_user
 
     if @message.save
-      redirect_to conversation_path(@conversation)
+      redirect_to chat_room_path(chat_room), notice: "Message sent."
     else
-      @messages = @conversation.messages
-      render "conversations/show", status: :unprocessable_entity
+      redirect_to chat_room_path(chat_room), alert: "Unable to send message."
     end
   end
 
   private
 
   def message_params
-    params.require(:message).permit(:body)
+    params.require(:chat_message).permit(:body)
   end
 end
