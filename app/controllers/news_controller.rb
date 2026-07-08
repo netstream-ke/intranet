@@ -16,6 +16,7 @@ class NewsController < ApplicationController
     @center = News.center.order(:position)
     @right  = News.right.order(:position)
     @grid   = News.grid.order(:position)
+    @gallery = News.gallery.order(:position).first
   end
 
   # =========================

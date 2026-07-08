@@ -2,9 +2,14 @@
 
     <!-- HEADER -->
     <div class="page-header">
-      
+      <br><br>
 
-       <%= link_to "Go to Intranet", news_index_path, class: "button" %>
+    <h1>How is your day <i><%= current_user.name %>? </i></h1>
+
+    <br><br>
+    <br><br>
+    <%= link_to "Schedule a task", new_task_path, class: "button" %>
+           <%= link_to "Go to Intranet", news_index_path, class: "button" %>
        <%= link_to "Notices", notices_path, class: "button"%>
 
       <%= link_to new_task_path, class: "floating-add-button" do %>
@@ -12,14 +17,7 @@
       <% end %>
     </div>
     <br><br>
-
-    <h1>How is your day <i><%= current_user.name %>? </i></h1>
-
-
-    <!-- ================= NEW TASKS ================= -->
     <br><br>
-    <%= link_to "Schedule a task", new_task_path, class: "button" %>
-    <br><br><br><br>
   <h2>Scheduled Tasks</h2>
     <table>
       <thead>

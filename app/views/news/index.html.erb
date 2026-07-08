@@ -8,39 +8,51 @@
   </div>
 
   <!-- HERO (MAIN STORY) -->
-  <div class="nyt-hero">
+<div class="nyt-hero">
 
-  <% hero_media = @main.media.first %>
+  <% if @main.present? %>
 
-  <% if hero_media.content_type.start_with?("video") %>
-    <video controls autoplay muted class="hero-video">
-      <source src="<%= url_for(hero_media) %>">
-    </video>
-  <% else %>
-    <%= image_tag hero_media, class: "hero-image" %>
-  <% end %>
+    <% hero_media = @main.media.first if @main.media.attached? %>
 
+    <% if hero_media.present? %>
 
-
-      <!-- ADMIN ACTIONS -->
-      <% if current_user&.admin? %>
-        <div class="admin-actions">
-          <%= link_to "Edit", edit_news_path(@main), class: "button" %>
-
-          <%= button_to "Delete",
-              news_path(@main),
-              method: :delete,
-              data: { turbo_confirm: "Delete this story?" },
-              class: "delete-btn" %>
-        </div>
+      <% if hero_media.content_type.start_with?("video") %>
+        <video controls autoplay muted class="hero-video">
+          <source src="<%= url_for(hero_media) %>">
+        </video>
+      <% else %>
+        <%= image_tag hero_media, class: "hero-image" %>
       <% end %>
 
-      <div class="hero-text">
-        <h1><%= link_to @main.title, news_path(@main) %></h1>
-        <p><%= truncate(@main.content.to_plain_text, length: 180) %></p>
-      </div>
+    <% end %>
 
-  </div>
+    <% if current_user&.admin? %>
+      <div class="admin-actions">
+        <%= link_to "Edit", edit_news_path(@main), class: "button" %>
+
+        <%= button_to "Delete",
+            news_path(@main),
+            method: :delete,
+            data: { turbo_confirm: "Delete this story?" },
+            class: "delete-btn" %>
+      </div>
+    <% end %>
+
+    <div class="hero-text">
+      <h1><%= link_to @main.title, news_path(@main) %></h1>
+      <p><%= truncate(@main.content.to_plain_text, length: 180) %></p>
+    </div>
+
+  <% else %>
+
+    <div class="hero-text">
+      <h1>No featured story available</h1>
+      <p>Publish a news article with the <strong>story type</strong> set to <strong>Main</strong> to display it here.</p>
+    </div>
+
+  <% end %>
+
+</div>
 
   <!-- MAIN GRID -->
   <div class="nyt-grid">

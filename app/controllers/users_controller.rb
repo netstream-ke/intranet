@@ -75,6 +75,14 @@ end
     end
   end
 
+  def update
+  if @user.update(user_params)
+    redirect_to @user
+  else
+    render :edit
+  end
+end
+
   # =========================
   # ROLE TOGGLE
   # =========================

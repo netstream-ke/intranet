@@ -38,18 +38,18 @@
 <% if current_user %>
 
   <div class="navbar">
-  <div class="nav-links">
-
-   <div class="logo">
+  <footer class="header-nav">
+   <div class="footer-left">
     <%= link_to tasks_path do %>
       <%= image_tag "teem-logo.png", alt: "teem", class: "navbar-logo" %>
     <% end %>
   </div>
-
+    <div class="footer-center">
     <%= link_to "Planner", tasks_path %>
     <%#= link_to "Board", "/board" %>
     <%#= link_to "Reports", reports_path %>
     <%= link_to "Intranet", news_index_path %>
+    <%= link_to "Chat", new_chat_chat_rooms_path %>
 
     <% if current_user.admin? %>
       <%= link_to "Users", users_path %>
@@ -58,7 +58,7 @@
       <%= link_to "Reports", reports_path %>
       <%= link_to "Audit Logs", admin_logs_path %>
     <% end %>
-
+    
 
 
 <% unread_count = current_user.chat_messages.where(read: false).count rescue 0 %>
@@ -69,9 +69,15 @@
   <% end %>
 <% end %>
 
-    <%= button_to "Logout", logout_path, method: :delete %>
+  <%= button_to "Logout",
+      logout_path,
+      method: :delete,
+      class: "logout-button",
+      form: { class: "logout-form" } %>
 
 <% end %>
+
+
     <%#= current_user&.name %>
 
     <% if current_user %>
@@ -97,9 +103,9 @@
 
           <%#= button_to "Logout", logout_path, method: :delete %>
         </div>-->
-<%= link_to "New Chat", new_chat_chat_rooms_path %>
       </div>
     <% end %>
+    </div>
   </div>
   </div>
   </div>
