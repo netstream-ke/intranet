@@ -31,8 +31,13 @@ body {
 }
 h2{
   font-size: 28px;
-  color:#888;
+  color:#7e38e7;
 }
+
+h1{
+  color:#7e38e7;
+}
+
 p{
   font-size: 14px;
   color:#333;
@@ -49,6 +54,7 @@ p{
 .form-page{
   max-width:960px;
   margin:20px auto;
+  top:60px;
   justify-content: center;
   align-items: center;
 }
@@ -57,32 +63,7 @@ p{
 .page-container {
   max-width: 960px;
   margin-top:100px;
-  margin: 20px auto;
 }
-
-/* =========================
-   NAVBAR (SLACK STYLE)
-========================= */
-.navbar {
-  position: sticky;
-  top: 0;
-  margin-bottom:20px;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60px;
-}
-.navbar a {
-  color:#888;
-  text-decoration: none;
-  display: flex;
-}
-
-.navbar a:hover {
-color:#333;
-}
-
 /* Center title */
 .nav-left {
   font-size: 18px;
@@ -121,10 +102,7 @@ table {
   background: white;
   margin-top: 20px;
   border-radius: 12px;
-  overflow: hidden;
   margin-bottom: 12px;
-  transform: translateY(10px);
-
 }
 
 th {
@@ -184,7 +162,7 @@ td:hover {
 ========================= */
 button,
 input[type="submit"] {
-  color:var(--primary);
+  color:#7e38e7;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
@@ -194,7 +172,7 @@ input[type="submit"] {
 
 button:hover,
 input[type="submit"]:hover {
-  background: var(--secondary);
+  background:#cbced0;
 }
 input.comment-submit{
   width: 40px;
@@ -259,24 +237,6 @@ input.comment-submit{
   font-size: 22px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-
-/* =========================
-   LOGIN CARD
-========================= */
-.login-container {
-  
-  margin: 60px auto;
-  padding: 40px;
-  background: white;
-  border-radius: 12px;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-.input.password{
-min-width:100px;
-
-}
 /* =========================
    MOBILE
 ========================= */
@@ -289,20 +249,144 @@ min-width:100px;
     font-size: 14px;
   }
 }
-/* =========================
-   FOOTER
-========================= */
-.header-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  font-size: 14px;
-  color: #6b7280;
+
+/* ===========================
+   HEADER
+=========================== */
+
+.header-nav{
+    position: sticky;   /* or fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    z-index: 9999;
+    padding-right: 20px auto;
+
+    background: #7e38e7;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+}
+
+.navbar-logo{
+    height:42px;
+}
+
+/* Navigation */
+
+.header-center{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.header-center a{
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+    transition:.25s;
+}
+
+.header-center a:hover{
+    color:#38bdf8;
+}
+
+/* Logout */
+
+.logout-form{
+    display:inline;
+}
+
+.logout-button{
+    background:none;
+    border:none;
+    color:white;
+    cursor:pointer;
+    font:inherit;
+    padding:0;
+}
+
+.logout-button:hover{
+    color:#cbced0;
+}
+
+/* Chat Badge */
+
+.chat-notification{
+    background:#ef4444;
+    color:white!important;
+    padding:5px 10px;
+    border-radius:50px;
+}
+
+/* Hamburger */
+
+#menu-toggle{
+    display:none;
+}
+
+.menu-button{
+    display:none;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width:900px){
+
+    .menu-button{
+        display:block;
+    }
+
+    .header-nav{
+        flex-wrap:wrap;
+        border-radius:10px;
+    }
+
+    .header-center{
+
+        width:100%;
+
+        display:none;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        padding-top:10px;
+
+        gap:10px;
+    }
+
+    .header-center a{
+        width:100%;
+    }
+
+    .logout-form{
+        width:100%;
+    }
+
+    .logout-button{
+        width:100%;
+        text-align:left;
+    }
+
+    #menu-toggle:checked ~ .header-center{
+        display:flex;
+    }
+
 }
 
 .footer {
@@ -673,7 +757,7 @@ a{
 }
 .comment-input {
   resize: none;
-  overflow: hidden;
+  overflow: visible;
   min-height: 40px;
   max-height: 150px;
 }
@@ -688,10 +772,6 @@ a{
   background: #f9fafb;
   padding: 8px;
   border-radius: 8px;
-}
-.navbar-logo {
-  height: 65px;
-  width:auto;
 }
 .chart-container {
   
@@ -983,7 +1063,7 @@ a{
   border-radius: 8px;
   margin-top: 5px;
   width: 300px;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .autocomplete-item {
@@ -1815,7 +1895,9 @@ trix-content{
 noticeboard-page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 70px 30px;
+  padding: 100px 30px;
+  align-items: center;
+  justify-content: center;
 }
 
 .notice-grid {
@@ -2005,13 +2087,12 @@ noticeboard-page {
 
   table {
     display: block;
-    overflow-x: auto;
     white-space: nowrap;
   }
 
   th,
   td {
-    min-width: 140px;
+
   }
 }
 

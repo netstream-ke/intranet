@@ -38,42 +38,49 @@
 <% if current_user %>
 
   <div class="navbar">
-  <footer class="header-nav">
-   <div class="footer-left">
-    <%= link_to tasks_path do %>
-      <%= image_tag "teem-logo.png", alt: "teem", class: "navbar-logo" %>
+<header class="header-nav">
+
+  <div class="header-left">
+    <%= link_to tasks_path, class: "brand" do %>
+      <%= image_tag "teem-logo.png", class: "navbar-logo", alt: "Teem" %>
     <% end %>
   </div>
-    <div class="footer-center">
+
+  <input type="checkbox" id="menu-toggle">
+
+  <label for="menu-toggle" class="menu-button">
+    ☰
+  </label>
+
+  <nav class="header-center">
+
     <%= link_to "Planner", tasks_path %>
-    <%#= link_to "Board", "/board" %>
-    <%#= link_to "Reports", reports_path %>
     <%= link_to "Intranet", news_index_path %>
     <%= link_to "Chat", new_chat_chat_rooms_path %>
 
     <% if current_user.admin? %>
       <%= link_to "Users", users_path %>
-      <%= link_to "Admin Dashboard", admin_dashboard_path %>
+      <%= link_to "Dashboard", admin_dashboard_path %>
       <%= link_to "Board", "/board" %>
       <%= link_to "Reports", reports_path %>
       <%= link_to "Audit Logs", admin_logs_path %>
     <% end %>
-    
 
+    <% if current_user.unread_messages_count.positive? %>
+      <%= link_to chat_rooms_path, class: "chat-notification" do %>
+        💬 <%= current_user.unread_messages_count %>
+      <% end %>
+    <% end %>
 
-<% unread_count = current_user.chat_messages.where(read: false).count rescue 0 %>
+    <%= button_to "Logout",
+          logout_path,
+          method: :delete,
+          class: "logout-button",
+          form: { class: "logout-form" } %>
 
-<% if current_user.unread_messages_count > 0 %>
-  <%= link_to chat_rooms_path, class: "chat-notification" do %>
-    <%= current_user.unread_messages_count %> new messages
-  <% end %>
-<% end %>
+  </nav>
 
-  <%= button_to "Logout",
-      logout_path,
-      method: :delete,
-      class: "logout-button",
-      form: { class: "logout-form" } %>
+</header>
 
 <% end %>
 
