@@ -5,13 +5,10 @@
       <br><br>
 
     <h1>How is your day <i><%= current_user.name %>? </i></h1>
-
-    <br><br>
     <br><br>
     <%= link_to "Schedule a task", new_task_path, class: "button" %>
            <%= link_to "Go to Intranet", news_index_path, class: "button" %>
        <%= link_to "Notices", notices_path, class: "button"%>
-
       <%= link_to new_task_path, class: "floating-add-button" do %>
         <i class="fas fa-plus"></i>
       <% end %>

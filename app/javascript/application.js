@@ -1,10 +1,12 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
-import "./controllers"
-import "./channels"
+import "channels"
+
 import "trix"
 import "@rails/actiontext"
+
+import "./navbar"
 function toggleDropdown() {
   const dropdown = document.getElementById("dropdown");
   dropdown.classList.toggle("hidden");
@@ -89,5 +91,3 @@ document.addEventListener("turbo:load", () => {
     }
   )
 })
-
-
